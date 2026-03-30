@@ -1,4 +1,29 @@
+# https://dart.dev/guides/libraries/private-files
 
-# FVM Version Cache
-.fvm/
-.todo.txt
+# Files and directories created by pub
+.dart_tool/
+.packages
+build/
+
+# Do not commit the following folder
+.pub/
+
+# If you're building a package, you might want to commit these files
+# to specify the version constraints you've tested with.
+# pubspec.lock
+
+# IDE and editor-specific files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+
+# Flutter-specific files
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# macOS-specific files
+.DS_Store
