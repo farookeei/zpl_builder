@@ -1,39 +1,41 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# ZPL Builder
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A powerful, declarative layout engine for generating Zebra Programming Language (ZPL) strings in Flutter.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Flexbox-like Layouts**: Use `ZplColumn` and `ZplRow` to manage alignment and spacing without worrying about coordinates.
+- **Declarative Style**: Define your label's structure once; the compiler calculates all `^FO` (Field Origin) tags automatically.
+- **Rich Components**: Includes `ZplText`, `ZplBarcode`, `ZplPadding`, and more.
+- **Easy Compilation**: One-step build process from component tree to ZPL string.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add `zpl_builder` to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  zpl_builder: ^0.0.1
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+final root = ZplColumn(
+  crossAxisAlignment: ZplCrossAxisAlignment.center,
+  children: [
+    ZplText('HELLO WORLD'),
+    ZplBarcode('987654321', type: ZplBarcodeType.code128),
+  ],
+);
+
+final String zpl = ZplBuilder.build(root);
 ```
+
+## Example Application
+
+Check out the [example](/example) folder for a full Flutter application demonstrating how to use the layout engine interactively.
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+This package aims to simplify label design for Zebra printers by abstracting away the coordinate-based system of raw ZPL.
