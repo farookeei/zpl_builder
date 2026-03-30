@@ -158,7 +158,7 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "zpl_builder",
+      "name": "zpl_kit",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"

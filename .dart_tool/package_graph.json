@@ -1,10 +1,10 @@
 {
   "roots": [
-    "zpl_builder"
+    "zpl_kit"
   ],
   "packages": [
     {
-      "name": "zpl_builder",
+      "name": "zpl_kit",
       "version": "0.0.1",
       "dependencies": [
         "flutter"

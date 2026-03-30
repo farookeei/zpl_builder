@@ -1,4 +1,4 @@
-# ZPL Builder
+# ZPL Kit
 
 A powerful, declarative layout engine for generating Zebra Programming Language (ZPL) strings in Flutter.
 
@@ -11,11 +11,11 @@ A powerful, declarative layout engine for generating Zebra Programming Language 
 
 ## Getting started
 
-Add `zpl_builder` to your `pubspec.yaml`:
+Add `zpl_kit` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  zpl_builder: ^0.0.1
+  zpl_kit: ^0.0.1
 ```
 
 ## Usage

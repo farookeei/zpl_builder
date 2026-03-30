@@ -2,7 +2,8 @@ import 'zpl_context.dart';
 import '../components/base/zpl_component.dart';
 import '../layout/geometry.dart';
 
-class ZplBuilder {
+class ZplKit {
+
   static String build(ZplComponent root) {
     // 1. Layout Pass
     root.performLayout();

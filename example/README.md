@@ -1,6 +1,7 @@
-# ZPL Builder Example
+# ZPL Kit Example
 
-This project demonstrates how to use the `zpl_builder` package to generate ZPL (Zebra Programming Language) strings using a declarative layout engine.
+This project demonstrates how to use the `zpl_kit` package to generate ZPL (Zebra Programming Language) strings using a declarative layout engine.
+
 
 ## Features Shown
 

@@ -5,7 +5,8 @@ export 'src/components/base/zpl_component.dart';
 export 'src/layout/geometry.dart';
 
 // Compiled & Context
-export 'src/compiler/zpl_builder.dart';
+export 'src/compiler/zpl_kit.dart';
+
 export 'src/compiler/zpl_context.dart';
 
 // Primitives

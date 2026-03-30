@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zpl_builder/zpl_builder.dart';
+import 'package:zpl_kit/zpl_kit.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -55,8 +56,9 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
     );
 
     setState(() {
-      _zplCode = ZplBuilder.build(root);
+      _zplCode = ZplKit.build(root);
     });
+
   }
 
   @override

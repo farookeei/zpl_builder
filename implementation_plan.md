@@ -28,11 +28,11 @@ lib/
 │   │   ├── zpl_barcode_type.dart       # Barcode definitions
 │   │   └── zpl_edge_insets.dart        # Padding config
 │   └── compiler/
-│       ├── zpl_builder.dart            # The main compiler rendering components to ^XA...^XZ
-│       └── zpl_context.dart            # Tracks current build state and nested coordinates
-├── utils/
-│   └── zpl_preview.dart                # Labelary API preview utility (bonus)
-└── zpl_builder.dart                    # Main package export file
+│       ├── zpl_kit.dart                # The main compiler rendering components to ^XA...^XZ
+│       └── zpl_context.dart            # State-holder for ZPL command building during compilation
+├── test
+│   └── zpl_kit_test.dart               # Unit tests verifying layout math and compilation
+└── zpl_kit.dart                        # Main package export file
 ```
 
 ## Phase 1: Core Layout Engine & Primitives
