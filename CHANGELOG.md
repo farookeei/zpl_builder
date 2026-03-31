@@ -1,3 +1,9 @@
+## 0.0.1+1
+
+* Added comprehensive DartDoc documentation for core API elements.
+* Fixed class names in the README example.
+* Improved library-level documentation for pub.dev scoring.
+
 ## 0.0.1
 
 * **Initial Release**: Core declarative layout engine for Zebra Programming Language (ZPL).
