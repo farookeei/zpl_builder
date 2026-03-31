@@ -1,3 +1,11 @@
+## 0.0.2
+
+* **Advanced Layout**: Added `ZplStack` for overlapping elements and `ZplGraphicBox` for lines and boxes.
+* **Label Dimensions**: Introduced `ZplLabelSize` with pre-defined standards like Shipping (4x6).
+* **Improved API**: Added `ZplFont.helvetica()` helper for simpler scalable font management.
+* **Printing Support**: Added `ZebraPrinterService` in the example app for direct socket-based network printing.
+* **Example Enhancements**: Updated the example app with a full professional shipping label layout and printer settings.
+
 ## 0.0.1+1
 
 * Added comprehensive DartDoc documentation for core API elements.
