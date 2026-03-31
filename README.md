@@ -29,7 +29,7 @@ final root = ZplColumn(
   ],
 );
 
-final String zpl = ZplBuilder.build(root);
+final String zpl = ZplKit.build(root);
 ```
 
 ## Example Application

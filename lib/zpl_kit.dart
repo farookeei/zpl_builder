@@ -1,3 +1,9 @@
+/// A library for building ZPL (Zebra Programming Language) labels using a declarative, Flexbox-like layout engine.
+///
+/// This package allows you to design labels with components like `ZplColumn`, `ZplRow`,
+/// `ZplText`, and `ZplBarcode` without manually calculating absolute coordinates.
+library zpl_kit;
+
 // Base
 export 'src/components/base/zpl_component.dart';
 

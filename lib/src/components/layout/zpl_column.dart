@@ -4,11 +4,18 @@ import '../../primitives/zpl_align_type.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
 
+/// A layout component that arranges its children in a vertical array.
 class ZplColumn extends ZplComponent {
+  /// The children components to arrange vertically.
   final List<ZplComponent> children;
+
+  /// How the children should be placed along the cross (horizontal) axis.
   final ZplCrossAxisAlignment crossAxisAlignment;
+
+  /// The space to place between each child.
   final double spacing;
 
+  /// Creates a [ZplColumn] with the given [children].
   ZplColumn({
     required this.children,
     this.crossAxisAlignment = ZplCrossAxisAlignment.start,
