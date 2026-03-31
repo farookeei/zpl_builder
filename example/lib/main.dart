@@ -57,22 +57,20 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
   void _generateZpl() {
     final root = ZplPadding(
-      padding: ZplEdgeInsets.all(50),
+      padding: ZplEdgeInsets.all(20),
       child: ZplColumn(
         crossAxisAlignment: ZplCrossAxisAlignment.start,
         children: [
-          // Section 1: Top (Logo & Company Info)
+          // Section 1: Logo & Title
           ZplRow(
-            spacing: 20,
+            spacing: 30,
             children: [
-              // Logo built with stack and graphic boxes
               ZplStack(
                 children: [
                   ZplGraphicBox(width: 100, height: 100, thickness: 100),
                   ZplPadding(
                     padding: ZplEdgeInsets.all(25),
-                    child: ZplGraphicBox(
-                        width: 50, height: 50, thickness: 50, reversePrint: true),
+                    child: ZplGraphicBox(width: 50, height: 50, thickness: 50, reversePrint: true),
                   ),
                   ZplPadding(
                     padding: ZplEdgeInsets.all(42),
@@ -85,11 +83,11 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 children: [
                   ZplText(
                     'Intershipping, Inc.',
-                    font: ZplFont(fontName: '0', height: 60, width: 60),
+                    font: ZplFont.helvetica(size: 60),
                   ),
-                  ZplText('1000 Shipping Lane'),
-                  ZplText('Shelbyville TN 38102'),
-                  ZplText('United States (USA)'),
+                  ZplText('1000 Shipping Lane', font: ZplFont.helvetica(size: 35)),
+                  ZplText('Shelbyville TN 38102', font: ZplFont.helvetica(size: 35)),
+                  ZplText('United States (USA)', font: ZplFont.helvetica(size: 35)),
                 ],
               ),
             ],
@@ -97,34 +95,34 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
           ZplPadding(
             padding: ZplEdgeInsets.symmetric(vertical: 20),
-            child: ZplGraphicBox(width: 700, height: 3, thickness: 3),
+            child: ZplGraphicBox(width: 760, height: 3, thickness: 3),
           ),
 
-          // Section 2: Recipient & Permit
-          ZplRow(
-            crossAxisAlignment: ZplCrossAxisAlignment.start,
+          // Section 2: Address & Permit (Using Stack for precise positioning)
+          ZplStack(
             children: [
+              // Address stays on the left
               ZplColumn(
                 crossAxisAlignment: ZplCrossAxisAlignment.start,
                 children: [
-                  ZplText('John Doe'),
-                  ZplText('100 Main Street'),
-                  ZplText('Springfield TN 39021'),
-                  ZplText('United States (USA)'),
+                  ZplText('John Doe', font: ZplFont.helvetica(size: 40)),
+                  ZplText('100 Main Street', font: ZplFont.helvetica(size: 40)),
+                  ZplText('Springfield TN 39021', font: ZplFont.helvetica(size: 40)),
+                  ZplText('United States (USA)', font: ZplFont.helvetica(size: 40)),
                 ],
               ),
-              // Use a smaller padding to keep it within the 812 dot width limit
+              // Permit Box positioned absolutely at X=580
               ZplPadding(
-                padding: ZplEdgeInsets.only(left: 200),
+                padding: ZplEdgeInsets.only(left: 550),
                 child: ZplStack(
                   children: [
-                    ZplGraphicBox(width: 150, height: 150, thickness: 3),
+                    ZplGraphicBox(width: 170, height: 170, thickness: 3),
                     ZplPadding(
-                      padding: ZplEdgeInsets.all(35),
+                      padding: ZplEdgeInsets.only(top: 45, left: 35),
                       child: ZplColumn(
                         children: [
-                          ZplText('Permit', font: ZplFont(fontName: 'A', height: 20, width: 20)),
-                          ZplText('123456', font: ZplFont(fontName: 'A', height: 20, width: 20)),
+                          ZplText('Permit', font: ZplFont(fontName: 'A', height: 30, width: 30)),
+                          ZplText('123456', font: ZplFont(fontName: 'A', height: 30, width: 30)),
                         ],
                       ),
                     ),
@@ -136,12 +134,12 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
           ZplPadding(
             padding: ZplEdgeInsets.symmetric(vertical: 20),
-            child: ZplGraphicBox(width: 700, height: 3, thickness: 3),
+            child: ZplGraphicBox(width: 760, height: 3, thickness: 3),
           ),
 
-          // Section 3: Barcode
+          // Section 3: Large Barcode
           ZplPadding(
-            padding: ZplEdgeInsets.only(left: 50, top: 20),
+            padding: ZplEdgeInsets.only(left: 70, top: 20),
             child: ZplBarcode(
               '12345678',
               height: 270,
@@ -151,39 +149,37 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
           ),
 
           ZplPadding(
-            padding: ZplEdgeInsets.only(top: 100),
+            padding: ZplEdgeInsets.only(top: 80),
             child: ZplGraphicBox(width: 0, height: 0),
           ),
 
-          // Section 4: Bottom Boxes
+          // Section 4: Bottom Split Box
           ZplStack(
             children: [
-              ZplGraphicBox(width: 700, height: 250, thickness: 3),
+              ZplGraphicBox(width: 760, height: 250, thickness: 3),
               ZplPadding(
-                padding: ZplEdgeInsets.only(left: 350),
+                padding: ZplEdgeInsets.only(left: 380),
                 child: ZplGraphicBox(width: 3, height: 250, thickness: 3),
               ),
-              ZplRow(
-                children: [
-                  ZplPadding(
-                    padding: ZplEdgeInsets.all(30),
-                    child: ZplColumn(
-                      crossAxisAlignment: ZplCrossAxisAlignment.start,
-                      children: [
-                        ZplText('Ctr. X34B-1'),
-                        ZplText('REF1 F00B47'),
-                        ZplText('REF2 BL4H8'),
-                      ],
-                    ),
-                  ),
-                  ZplPadding(
-                    padding: ZplEdgeInsets.only(left: 80, top: 30),
-                    child: ZplText(
-                      'CA',
-                      font: ZplFont(fontName: '0', height: 190, width: 190),
-                    ),
-                  ),
-                ],
+              // Left Column
+              ZplPadding(
+                padding: ZplEdgeInsets.all(35),
+                child: ZplColumn(
+                  crossAxisAlignment: ZplCrossAxisAlignment.start,
+                  children: [
+                    ZplText('Ctr. X34B-1', font: ZplFont.helvetica(size: 45)),
+                    ZplText('REF1 F00B47', font: ZplFont.helvetica(size: 45)),
+                    ZplText('REF2 BL4H8', font: ZplFont.helvetica(size: 45)),
+                  ],
+                ),
+              ),
+              // "CA" centered in the right half (starts at 380, width 380)
+              ZplPadding(
+                padding: ZplEdgeInsets.only(left: 450, top: 40),
+                child: ZplText(
+                  'CA',
+                  font: ZplFont.helvetica(size: 195),
+                ),
               ),
             ],
           ),
