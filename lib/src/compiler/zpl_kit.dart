@@ -1,6 +1,7 @@
 import 'zpl_context.dart';
 import '../components/base/zpl_component.dart';
 import '../layout/geometry.dart';
+import '../primitives/zpl_label_size.dart';
 
 /// The entry point for the ZPL layout engine.
 class ZplKit {
@@ -9,7 +10,9 @@ class ZplKit {
   /// This method performs two passes:
   /// 1. A layout pass to calculate relative and absolute coordinates.
   /// 2. A compilation pass to generate the final ZPL string.
-  static String build(ZplComponent root) {
+  ///
+  /// Optional [labelSize] allows setting fixed dimensions for the label.
+  static String build(ZplComponent root, {ZplLabelSize? labelSize}) {
     // 1. Layout Pass
     root.performLayout();
 
@@ -19,6 +22,11 @@ class ZplKit {
     // 2. Compilation Pass
     final context = ZplContext();
     context.addCommand('^XA\n'); // Start Format
+
+    if (labelSize != null) {
+      context.addCommand('^PW${labelSize.width}\n'); // Set Width
+      context.addCommand('^LL${labelSize.height}\n'); // Set Length
+    }
 
     root.compile(context);
 

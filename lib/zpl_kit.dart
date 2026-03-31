@@ -20,12 +20,15 @@ export 'src/primitives/zpl_align_type.dart';
 export 'src/primitives/zpl_barcode_type.dart';
 export 'src/primitives/zpl_edge_insets.dart';
 export 'src/primitives/zpl_font.dart';
+export 'src/primitives/zpl_label_size.dart';
 
 // Components - Layout
 export 'src/components/layout/zpl_column.dart';
 export 'src/components/layout/zpl_row.dart';
 export 'src/components/layout/zpl_padding.dart';
+export 'src/components/layout/zpl_stack.dart';
 
 // Components - Widgets
 export 'src/components/widgets/zpl_barcode.dart';
 export 'src/components/widgets/zpl_text.dart';
+export 'src/components/widgets/zpl_graphic_box.dart';
