@@ -31,8 +31,8 @@ class ZplRow extends ZplComponent {
         totalFlex += child.flex;
       } else {
         // This is a fixed-size child (like a standard Text or Barcode)
-        child.performLayout(
-            const ZplConstraints()); // Row children generally unconstrained horizontally initially unless specified
+        // We pass the parent's height constraints so the child knows how tall it can be
+        child.performLayout(constraints.copyWith(minWidth: 0));
         totalUnflexedWidth += child.size.width;
         maxChildHeight = max(maxChildHeight, child.size.height);
       }

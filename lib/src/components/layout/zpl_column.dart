@@ -38,8 +38,8 @@ class ZplColumn extends ZplComponent {
         totalFlex += child.flex;
       } else {
         // This is a fixed-size child (like a standard Text or Barcode)
-        child.performLayout(
-            const ZplConstraints()); // Unconstrained vertically initially
+        // We pass the parent's width constraints so the child knows how wide it can be
+        child.performLayout(constraints.copyWith(minHeight: 0));
         totalUnflexedHeight += child.size.height;
         maxChildWidth = max(maxChildWidth, child.size.width);
       }

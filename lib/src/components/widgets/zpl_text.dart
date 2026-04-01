@@ -25,13 +25,16 @@ class ZplText extends ZplComponent {
     double charWidth = font.width;
     double measuredWidth = text.length * charWidth;
     
-    if (constraints.hasBoundedWidth && measuredWidth > constraints.maxWidth) {
+    if (constraints.hasBoundedWidth &&
+        constraints.maxWidth > 0 &&
+        measuredWidth > constraints.maxWidth) {
       _layoutWidth = constraints.maxWidth;
       int lines = (measuredWidth / constraints.maxWidth).ceil();
       lines = min(lines, maxLines);
       setSize(ZplSize(constraints.maxWidth, font.height * lines));
     } else {
-      _layoutWidth = constraints.hasBoundedWidth ? constraints.maxWidth : measuredWidth;
+      _layoutWidth =
+          constraints.hasBoundedWidth ? constraints.maxWidth : measuredWidth;
       setSize(ZplSize(_layoutWidth!, font.height));
     }
   }
