@@ -18,6 +18,46 @@ Traditional ZPL generation involves constant string concatenation and error-pron
 
 ---
 
+## Before & After
+
+Designing labels shouldn't feel like math class. See how much cleaner your code becomes with `zpl_kit`.
+
+### The Old Way (Manual String Building)
+Manual math to align elements. If you move one thing, you have to recalculate every coordinate below it.
+
+```dart
+// Manual, Error-prone, hard to maintain
+String generateZpl(String shipFrom, String carrier) {
+  return "^XA" +
+         "^FO50,50^A0N,40,40^FD$shipFrom^FS" +
+         "^FO420,50^A0N,40,40^FD$carrier^FS" + // Manual math to align!
+         "^FO50,100^GB700,2,2^FS" +
+         "^FO200,250^BY3^BCN,150,Y,N,N^FD123456^FS" +
+         "^XZ";
+}
+```
+
+### The `zpl_kit` Way (Declarative)
+Define the **structural relationships** and let the engine handle the math.
+
+```dart
+// Declarative, Flexible, and Readable
+final label = ZplColumn(
+  children: [
+    ZplRow(
+      children: [
+        ZplExpanded(child: ZplText('SHIP FROM: $shipFrom')),
+        ZplExpanded(child: ZplText('CARRIER: $carrier', textAlign: ZplTextAlign.right)),
+      ],
+    ),
+    ZplDivider(),
+    ZplCenter(child: ZplBarcode('123456', height: 150)),
+  ],
+);
+```
+
+---
+
 ## Installation
 
 Add `zpl_kit` to your `pubspec.yaml`:
