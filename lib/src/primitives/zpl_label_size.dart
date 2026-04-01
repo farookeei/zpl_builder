@@ -2,6 +2,7 @@
 class ZplLabelSize {
   /// Width in dots.
   final int width;
+
   /// Height in dots.
   final int height;
 
