@@ -27,8 +27,12 @@ export 'src/components/layout/zpl_column.dart';
 export 'src/components/layout/zpl_row.dart';
 export 'src/components/layout/zpl_padding.dart';
 export 'src/components/layout/zpl_stack.dart';
+export 'src/components/layout/zpl_expanded.dart';
+export 'src/components/layout/zpl_spacer.dart';
+export 'src/components/layout/zpl_center.dart';
 
 // Components - Widgets
 export 'src/components/widgets/zpl_barcode.dart';
 export 'src/components/widgets/zpl_text.dart';
 export 'src/components/widgets/zpl_graphic_box.dart';
+export 'src/components/widgets/zpl_divider.dart';

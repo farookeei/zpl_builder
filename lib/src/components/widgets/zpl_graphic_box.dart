@@ -19,7 +19,7 @@ class ZplGraphicBox extends ZplComponent {
   });
 
   @override
-  void performLayout() {
+  void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
     setSize(ZplSize(width, height));
   }
 

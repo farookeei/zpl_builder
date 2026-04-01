@@ -23,7 +23,7 @@ abstract class ZplComponent {
   }
 
   /// Calculates the size of this component and its children.
-  void performLayout();
+  void performLayout([ZplConstraints constraints = const ZplConstraints()]);
 
   /// Generates the ZPL commands for this component.
   void compile(ZplContext context);

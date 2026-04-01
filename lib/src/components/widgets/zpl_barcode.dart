@@ -30,7 +30,7 @@ class ZplBarcode extends ZplComponent {
   });
 
   @override
-  void performLayout() {
+  void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
     // Basic heuristic for estimating barcode bounds
     double estimatedWidth = data.length * 11 * widthRatio;
     setSize(ZplSize(estimatedWidth, height + (printText ? 20 : 0)));

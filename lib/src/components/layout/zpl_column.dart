@@ -3,6 +3,8 @@ import '../base/zpl_component.dart';
 import '../../primitives/zpl_align_type.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
+import 'zpl_expanded.dart';
+import 'zpl_spacer.dart';
 
 /// A layout component that arranges its children in a vertical array.
 class ZplColumn extends ZplComponent {
@@ -23,21 +25,58 @@ class ZplColumn extends ZplComponent {
   });
 
   @override
-  void performLayout() {
-    double totalHeight = 0;
+  void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
+    // PASS 1: Measure all "Fixed" children (those that aren't flexible)
+    double totalUnflexedHeight = 0;
     double maxChildWidth = 0;
+    int totalFlex = 0;
 
     for (var child in children) {
-      child.performLayout();
-      totalHeight += child.size.height;
-      maxChildWidth = max(maxChildWidth, child.size.width);
+      if (child is ZplExpanded) {
+        totalFlex += child.flex;
+      } else if (child is ZplSpacer) {
+        totalFlex += child.flex;
+      } else {
+        // This is a fixed-size child (like a standard Text or Barcode)
+        child.performLayout(
+            const ZplConstraints()); // Unconstrained vertically initially
+        totalUnflexedHeight += child.size.height;
+        maxChildWidth = max(maxChildWidth, child.size.width);
+      }
     }
 
-    if (children.isNotEmpty) {
-      totalHeight += spacing * (children.length - 1);
+    // Calculate how much space is left for the Flexible children
+    double totalSpacing =
+        spacing * (children.isNotEmpty ? children.length - 1 : 0);
+    double remainingHeight = 0;
+
+    if (constraints.hasBoundedHeight) {
+      remainingHeight =
+          max(0.0, constraints.maxHeight - totalUnflexedHeight - totalSpacing);
     }
 
-    setSize(ZplSize(maxChildWidth, totalHeight));
+    // PASS 2: Tell Flexible children how much of the "Remaining Height" they get
+    for (var child in children) {
+      if (child is ZplExpanded) {
+        double flexHeight =
+            totalFlex > 0 ? (child.flex / totalFlex) * remainingHeight : 0;
+        // Force the child to take its share of the flex height
+        child.performLayout(
+            ZplConstraints(maxHeight: flexHeight, minHeight: flexHeight));
+        maxChildWidth = max(maxChildWidth, child.size.width);
+      } else if (child is ZplSpacer) {
+        double flexHeight =
+            totalFlex > 0 ? (child.flex / totalFlex) * remainingHeight : 0;
+        child.performLayout(
+            ZplConstraints(maxHeight: flexHeight, minHeight: flexHeight));
+      }
+    }
+
+    // Final total height of the Column
+    double finalHeight = constraints.hasBoundedHeight
+        ? constraints.maxHeight
+        : totalUnflexedHeight + totalSpacing;
+    setSize(ZplSize(maxChildWidth, finalHeight));
   }
 
   @override

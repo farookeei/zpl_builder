@@ -10,7 +10,7 @@ class ZplStack extends ZplComponent {
   ZplStack({required this.children});
 
   @override
-  void performLayout() {
+  void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
     double maxWidth = 0;
     double maxHeight = 0;
 

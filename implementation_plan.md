@@ -48,3 +48,7 @@ lib/
 ## Phase 3: Networking & Preview
 1. **TCP Network Printing**: Create `ZebraPrinter.printZPL(...)` util method.
 2. **Labelary API**: Take generated ZPL and request an image preview.
+
+
+## Additional Plans: 
+1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components**

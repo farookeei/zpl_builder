@@ -14,7 +14,11 @@ class ZplKit {
   /// Optional [labelSize] allows setting fixed dimensions for the label.
   static String build(ZplComponent root, {ZplLabelSize? labelSize}) {
     // 1. Layout Pass
-    root.performLayout();
+    ZplConstraints constraints = labelSize != null
+        ? ZplConstraints(maxWidth: labelSize.width.toDouble(), maxHeight: labelSize.height.toDouble())
+        : const ZplConstraints();
+    
+    root.performLayout(constraints);
 
     // Root starts at origin
     root.setOffset(ZplOffset.zero);

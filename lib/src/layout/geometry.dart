@@ -14,3 +14,35 @@ class ZplOffset {
   ZplOffset translate(double translateX, double translateY) =>
       ZplOffset(dx + translateX, dy + translateY);
 }
+
+/// Constraints to pass down available dimensions to children components
+class ZplConstraints {
+  final double minWidth;
+  final double maxWidth;
+  final double minHeight;
+  final double maxHeight;
+
+  const ZplConstraints({
+    this.minWidth = 0.0,
+    this.maxWidth = double.infinity,
+    this.minHeight = 0.0,
+    this.maxHeight = double.infinity,
+  });
+
+  bool get hasBoundedWidth => maxWidth < double.infinity;
+  bool get hasBoundedHeight => maxHeight < double.infinity;
+
+  ZplConstraints copyWith({
+    double? minWidth,
+    double? maxWidth,
+    double? minHeight,
+    double? maxHeight,
+  }) {
+    return ZplConstraints(
+      minWidth: minWidth ?? this.minWidth,
+      maxWidth: maxWidth ?? this.maxWidth,
+      minHeight: minHeight ?? this.minHeight,
+      maxHeight: maxHeight ?? this.maxHeight,
+    );
+  }
+}
