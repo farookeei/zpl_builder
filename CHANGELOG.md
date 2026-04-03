@@ -1,3 +1,11 @@
+## 0.0.3
+
+* **New Layout Components**: Added `ZplCenter`, `ZplExpanded`, `ZplSpacer`, and `ZplDivider` for advanced alignment and spacing control.
+* **Flex Layout Improvements**: `ZplRow` and `ZplColumn` now support weighted distribution using `ZplExpanded` and improved constraint propagation.
+* **Rich Text Features**: `ZplText` now supports multi-line wrapping with `maxLines` and text alignment (Left, Center, Right, Justified) via the ZPL Field Block (`^FB`) command.
+* **Validation Suite**: Introduced automated internal tests for validating layout primitives and complex shipping label designs.
+* **Documentation Overhaul**: Major README updates with deep-dive examples, before/after code blocks, and feature highlights.
+
 ## 0.0.2
 
 * **Advanced Layout**: Added `ZplStack` for overlapping elements and `ZplGraphicBox` for lines and boxes.
