@@ -10,7 +10,7 @@ class ZplFont {
   final double height;
 
   const ZplFont({
-    required this.fontName,
+    this.fontName = '0',
     this.width = 30.0,
     this.height = 30.0,
   });

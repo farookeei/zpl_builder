@@ -33,14 +33,19 @@ class ZplColumn extends ZplComponent {
     int totalFlex = 0;
 
     for (var child in children) {
-      if (child is ZplExpanded) {
-        totalFlex += child.flex;
-      } else if (child is ZplSpacer) {
-        totalFlex += child.flex;
+      if (child is ZplExpanded || child is ZplSpacer) {
+        if (child is ZplExpanded) totalFlex += child.flex;
+        else totalFlex += (child as ZplSpacer).flex;
       } else {
-        // This is a fixed-size child (like a standard Text or Barcode)
-        // We pass the parent's width constraints so the child knows how wide it can be
-        child.performLayout(constraints.copyWith(minHeight: 0));
+        // We MUST pass the parent's width constraints down, 
+        // otherwise children (like Rows or Text) might assume infinite width
+        child.performLayout(ZplConstraints(
+          maxWidth: constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity,
+          minWidth: 0,
+          maxHeight: double.infinity,
+          minHeight: 0,
+        ));
+        
         totalUnflexedHeight += child.size.height;
         maxChildWidth = max(maxChildWidth, child.size.width);
       }

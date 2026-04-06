@@ -26,22 +26,33 @@ class ZplPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: labelSize.width.toDouble(),
-      height: labelSize.height.toDouble(),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Calculate the scale based on the available width
+        final double screenWidthSize = constraints.maxWidth;
+        final double logicalHeight = (screenWidthSize / labelSize.width) * labelSize.height;
+
+        return Center(
+          child: Container(
+            width: screenWidthSize,
+            height: logicalHeight,
+            clipBehavior: Clip.hardEdge, // Ensure content doesn't leak onto the desk
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: CustomPaint(
+              painter: _ZplPainter(root, labelSize),
+            ),
           ),
-        ],
-      ),
-      child: CustomPaint(
-        painter: _ZplPainter(root, labelSize),
-      ),
+        );
+      },
     );
   }
 }
@@ -54,7 +65,18 @@ class _ZplPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 1. Perform layout with fixed constraints matching the label size
+    // 1. Calculate scale factor to fit dots into pixels
+    // We want to fit 'labelSize.width' dots into 'size.width' pixels
+    final double scaleX = size.width / labelSize.width;
+    final double scaleY = size.height / labelSize.height;
+    
+    // Use the same scale for both axes to maintain aspect ratio
+    final double scale = scaleX < scaleY ? scaleX : scaleY;
+
+    canvas.save();
+    canvas.scale(scale);
+
+    // 2. Perform layout with fixed constraints matching the physical label size in dots
     root.performLayout(ZplConstraints(
       maxWidth: labelSize.width.toDouble(),
       maxHeight: labelSize.height.toDouble(),
@@ -62,13 +84,16 @@ class _ZplPainter extends CustomPainter {
       minHeight: labelSize.height.toDouble(),
     ));
 
-    // 2. Assign absolute offsets
+    // 3. Assign absolute offsets in dots
     root.finalizeLayout(ZplOffset.zero);
 
-    // 3. Render the tree
+    // 4. Render the tree
     root.paint(canvas, Offset.zero);
+    
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant _ZplPainter oldDelegate) => 
+    oldDelegate.root != root || oldDelegate.labelSize != labelSize;
 }

@@ -12,9 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ZPL Builder Example',
+      title: 'ZPL Kit Example',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        useMaterial3: true,
       ),
       home: const ZplExamplePage(),
     );
@@ -30,10 +32,13 @@ class ZplExamplePage extends StatefulWidget {
 
 class _ZplExamplePageState extends State<ZplExamplePage> {
   String _zplCode = '';
+  ZplComponent? _lastRoot;
   ZplLabelSize _selectedSize = ZplLabelSize.shipping4x6;
   late final TextEditingController _widthController;
   late final TextEditingController _heightController;
-  final TextEditingController _ipController = TextEditingController(text: '172.17.9.11');
+  final TextEditingController _ipController = TextEditingController(
+    text: '172.17.9.11',
+  );
   bool _isPrinting = false;
 
   @override
@@ -55,8 +60,8 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
     super.dispose();
   }
 
-  void _generateZpl() {
-    final root = ZplPadding(
+  ZplComponent _buildRoot() {
+    return ZplPadding(
       padding: ZplEdgeInsets.all(20),
       child: ZplColumn(
         crossAxisAlignment: ZplCrossAxisAlignment.start,
@@ -70,7 +75,12 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                   ZplGraphicBox(width: 100, height: 100, thickness: 100),
                   ZplPadding(
                     padding: ZplEdgeInsets.all(25),
-                    child: ZplGraphicBox(width: 50, height: 50, thickness: 50, reversePrint: true),
+                    child: ZplGraphicBox(
+                      width: 50,
+                      height: 50,
+                      thickness: 50,
+                      reversePrint: true,
+                    ),
                   ),
                   ZplPadding(
                     padding: ZplEdgeInsets.all(42),
@@ -85,9 +95,18 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                     'Intershipping, Inc.',
                     font: ZplFont.helvetica(size: 60),
                   ),
-                  ZplText('1000 Shipping Lane', font: ZplFont.helvetica(size: 35)),
-                  ZplText('Shelbyville TN 38102', font: ZplFont.helvetica(size: 35)),
-                  ZplText('United States (USA)', font: ZplFont.helvetica(size: 35)),
+                  ZplText(
+                    '1000 Shipping Lane',
+                    font: ZplFont.helvetica(size: 35),
+                  ),
+                  ZplText(
+                    'Shelbyville TN 38102',
+                    font: ZplFont.helvetica(size: 35),
+                  ),
+                  ZplText(
+                    'United States (USA)',
+                    font: ZplFont.helvetica(size: 35),
+                  ),
                 ],
               ),
             ],
@@ -98,20 +117,24 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
             child: ZplGraphicBox(width: 760, height: 3, thickness: 3),
           ),
 
-          // Section 2: Address & Permit (Using Stack for precise positioning)
+          // Section 2: Address & Permit
           ZplStack(
             children: [
-              // Address stays on the left
               ZplColumn(
                 crossAxisAlignment: ZplCrossAxisAlignment.start,
                 children: [
                   ZplText('John Doe', font: ZplFont.helvetica(size: 40)),
                   ZplText('100 Main Street', font: ZplFont.helvetica(size: 40)),
-                  ZplText('Springfield TN 39021', font: ZplFont.helvetica(size: 40)),
-                  ZplText('United States (USA)', font: ZplFont.helvetica(size: 40)),
+                  ZplText(
+                    'Springfield TN 39021',
+                    font: ZplFont.helvetica(size: 40),
+                  ),
+                  ZplText(
+                    'United States (USA)',
+                    font: ZplFont.helvetica(size: 40),
+                  ),
                 ],
               ),
-              // Permit Box positioned absolutely at X=580
               ZplPadding(
                 padding: ZplEdgeInsets.only(left: 550),
                 child: ZplStack(
@@ -121,8 +144,14 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                       padding: ZplEdgeInsets.only(top: 45, left: 35),
                       child: ZplColumn(
                         children: [
-                          ZplText('Permit', font: ZplFont(fontName: 'A', height: 30, width: 30)),
-                          ZplText('123456', font: ZplFont(fontName: 'A', height: 30, width: 30)),
+                          ZplText(
+                            'Permit',
+                            font: ZplFont(fontName: 'A', height: 30, width: 30),
+                          ),
+                          ZplText(
+                            '123456',
+                            font: ZplFont(fontName: 'A', height: 30, width: 30),
+                          ),
                         ],
                       ),
                     ),
@@ -148,10 +177,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
             ),
           ),
 
-          ZplPadding(
-            padding: ZplEdgeInsets.only(top: 80),
-            child: ZplGraphicBox(width: 0, height: 0),
-          ),
+          ZplSpacer(flex: 1),
 
           // Section 4: Bottom Split Box
           ZplStack(
@@ -161,7 +187,6 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 padding: ZplEdgeInsets.only(left: 380),
                 child: ZplGraphicBox(width: 3, height: 250, thickness: 3),
               ),
-              // Left Column
               ZplPadding(
                 padding: ZplEdgeInsets.all(35),
                 child: ZplColumn(
@@ -173,175 +198,192 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                   ],
                 ),
               ),
-              // "CA" centered in the right half (starts at 380, width 380)
               ZplPadding(
                 padding: ZplEdgeInsets.only(left: 450, top: 40),
-                child: ZplText(
-                  'CA',
-                  font: ZplFont.helvetica(size: 195),
-                ),
+                child: ZplText('CA', font: ZplFont.helvetica(size: 195)),
               ),
             ],
           ),
         ],
       ),
     );
+  }
 
+  void _generateZpl() {
     final width = int.tryParse(_widthController.text) ?? 800;
     final height = int.tryParse(_heightController.text) ?? 600;
 
+    final root = _buildRoot();
     setState(() {
+      _lastRoot = root;
       _zplCode = ZplKit.build(root, labelSize: ZplLabelSize(width, height));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('ZPL Builder Example'), elevation: 2),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('ZPL Kit Example'),
+          elevation: 2,
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.code), text: 'ZPL Code'),
+              Tab(icon: Icon(Icons.preview), text: 'Native Preview'),
+            ],
+          ),
+        ),
+        body: Column(
           children: [
-            const Text(
-              'Label Settings',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  flex: 4,
-                  child: DropdownButtonFormField<ZplLabelSize>(
-                    value: _selectedSize,
-                    decoration: const InputDecoration(
-                      labelText: 'Standard Size',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    items: ZplLabelSize.commonSizes.map((size) {
-                      return DropdownMenuItem(
-                        value: size,
-                        child: Text(size.name, style: TextStyle(fontSize: 13)),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          _selectedSize = value;
-                          _widthController.text = value.width.toString();
-                          _heightController.text = value.height.toString();
-                        });
-                        _generateZpl();
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    controller: _widthController,
-                    decoration: const InputDecoration(
-                      labelText: 'Width (Dots)',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) => _generateZpl(),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    controller: _heightController,
-                    decoration: const InputDecoration(
-                      labelText: 'Height (Dots)',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) => _generateZpl(),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Generated ZPL:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            const SizedBox(height: 10),
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[400]!),
+              child: TabBarView(
+                children: [_buildZplView(), _buildPreviewView()],
+              ),
+            ),
+            _buildControls(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildZplView() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: SingleChildScrollView(
+          child: SelectableText(
+            _zplCode,
+            style: const TextStyle(
+              fontFamily: 'Courier',
+              color: Colors.greenAccent,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreviewView() {
+    if (_lastRoot == null)
+      return const Center(child: Text('Generate ZPL to see Preview'));
+
+    return Container(
+      color: Colors.grey[300], // "Desk" surface
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+        child: Center(
+          child: ZplPreview(
+            root: _lastRoot!,
+            labelSize: _selectedSize,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildControls() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, -2),
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: DropdownButtonFormField<ZplLabelSize>(
+                  value: _selectedSize,
+                  decoration: const InputDecoration(
+                    labelText: 'Label Size',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                  ),
+                  items: ZplLabelSize.commonSizes.map((size) {
+                    return DropdownMenuItem(
+                      value: size,
+                      child: Text(
+                        size.name,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedSize = value;
+                        _widthController.text = value.width.toString();
+                        _heightController.text = value.height.toString();
+                      });
+                      _generateZpl();
+                    }
+                  },
                 ),
-                child: SingleChildScrollView(
-                  child: SelectableText(
-                    _zplCode,
-                    style: const TextStyle(fontFamily: 'Courier', fontSize: 14),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  controller: _ipController,
+                  decoration: const InputDecoration(
+                    labelText: 'Printer IP',
+                    border: OutlineInputBorder(),
+                  ),
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: _generateZpl,
+                  icon: const Icon(Icons.sync),
+                  label: const Text('Refresh'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton.icon(
+                  onPressed: _isPrinting ? null : _printToPrinter,
+                  icon: _isPrinting
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.print),
+                  label: const Text('SEND TO PRINTER'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal[700],
+                    foregroundColor: Colors.white,
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: _generateZpl,
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Regenerate ZPL'),
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16)),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    controller: _ipController,
-                    decoration: const InputDecoration(
-                      labelText: 'Printer IP Address',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.print),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton(
-                    onPressed: _isPrinting ? null : _printToPrinter,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[700],
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                    ),
-                    child: _isPrinting
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Text('PRINT TO ZEBRA'),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

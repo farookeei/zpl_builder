@@ -20,22 +20,28 @@ class ZplRow extends ZplComponent {
 
   @override
   void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
-    // PASS 1: Measure all "Fixed" children (those that aren't flexible)
+    double currentRemainingWidth = constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity;
     double totalUnflexedWidth = 0;
     double maxChildHeight = 0;
     int totalFlex = 0;
 
-    for (var child in children) {
-      if (child is ZplExpanded) {
-        totalFlex += child.flex;
-      } else if (child is ZplSpacer) {
-        totalFlex += child.flex;
+    for (int i = 0; i < children.length; i++) {
+      final child = children[i];
+      if (child is ZplExpanded || child is ZplSpacer) {
+        if (child is ZplExpanded) totalFlex += child.flex;
+        else totalFlex += (child as ZplSpacer).flex;
       } else {
-        // This is a fixed-size child (like a standard Text or Barcode)
-        // We pass the parent's height constraints so the child knows how tall it can be
-        child.performLayout(constraints.copyWith(minWidth: 0));
+        child.performLayout(constraints.copyWith(
+          minWidth: 0, 
+          maxWidth: currentRemainingWidth,
+        ));
+        
         totalUnflexedWidth += child.size.width;
         maxChildHeight = max(maxChildHeight, child.size.height);
+        
+        if (currentRemainingWidth != double.infinity) {
+          currentRemainingWidth = max(0.0, currentRemainingWidth - child.size.width - spacing);
+        }
       }
     }
 
