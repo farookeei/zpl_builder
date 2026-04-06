@@ -20,10 +20,10 @@ class ZplKit {
     
     root.performLayout(constraints);
 
-    // Root starts at origin
-    root.setOffset(ZplOffset.zero);
+    // 2. Finalize Pass (Assign absolute offsets)
+    root.finalizeLayout(ZplOffset.zero);
 
-    // 2. Compilation Pass
+    // 3. Compilation Pass
     final context = ZplContext();
     context.addCommand('^XA\n'); // Start Format
 

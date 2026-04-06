@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../primitives/zpl_edge_insets.dart';
 import '../../layout/geometry.dart';
@@ -21,8 +22,18 @@ class ZplPadding extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+    child.finalizeLayout(absoluteOffset.translate(padding.left, padding.top));
+  }
+
+  @override
   void compile(ZplContext context) {
-    child.setOffset(offset.translate(padding.left, padding.top));
     child.compile(context);
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    child.paint(canvas, offset);
   }
 }

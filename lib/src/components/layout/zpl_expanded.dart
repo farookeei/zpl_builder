@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
@@ -20,8 +21,18 @@ class ZplExpanded extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+    child.finalizeLayout(absoluteOffset);
+  }
+
+  @override
   void compile(ZplContext context) {
-    child.setOffset(offset);
     child.compile(context);
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    child.paint(canvas, offset);
   }
 }

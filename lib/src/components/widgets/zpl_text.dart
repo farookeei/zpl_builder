@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../primitives/zpl_font.dart';
 import '../../primitives/zpl_align_type.dart';
@@ -40,6 +41,11 @@ class ZplText extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+  }
+
+  @override
   void compile(ZplContext context) {
     context.addCommand('^FO${offset.dx.toInt()},${offset.dy.toInt()}');
     context.addCommand(
@@ -58,5 +64,35 @@ class ZplText extends ZplComponent {
     }
 
     context.addCommand('^FD$text^FS\n');
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: font.height,
+          height: 1.0,
+          fontFamily: 'monospace',
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: maxLines,
+      textAlign: _toFlutterTextAlign(textAlign),
+    );
+
+    textPainter.layout(maxWidth: size.width);
+    textPainter.paint(canvas, Offset(this.offset.dx, this.offset.dy));
+  }
+
+  TextAlign _toFlutterTextAlign(ZplTextAlign align) {
+    switch (align) {
+      case ZplTextAlign.left: return TextAlign.left;
+      case ZplTextAlign.center: return TextAlign.center;
+      case ZplTextAlign.right: return TextAlign.right;
+      case ZplTextAlign.justified: return TextAlign.justify;
+    }
   }
 }

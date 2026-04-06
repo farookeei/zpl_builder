@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
@@ -19,7 +20,17 @@ class ZplSpacer extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+  }
+
+  @override
   void compile(ZplContext context) {
+    // Spacer renders nothing
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
     // Spacer renders nothing
   }
 }

@@ -36,3 +36,6 @@ export 'src/components/widgets/zpl_barcode.dart';
 export 'src/components/widgets/zpl_text.dart';
 export 'src/components/widgets/zpl_graphic_box.dart';
 export 'src/components/widgets/zpl_divider.dart';
+
+// Preview Widget
+export 'src/widgets/zpl_preview.dart';

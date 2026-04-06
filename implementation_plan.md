@@ -49,6 +49,19 @@ lib/
 1. **TCP Network Printing**: Create `ZebraPrinter.printZPL(...)` util method.
 2. **Labelary API**: Take generated ZPL and request an image preview.
 
+## Phase 4: Rich Content & Advanced UI
+1. **2D Barcode Support**: Implement `QR Code (^BQ)` and `Data Matrix (^BX)` in `ZplBarcodeType`.
+2. **Graphic Field Support**: Add `ZplImage` for converting bitmaps/logos to `^GF` ZPL commands.
+3. **Inversion & Underlining**: Support `^FR` (Field Reverse) and `^FW` (Field Orientation) for rotated text.
+4. **Enhanced Typography**: Support custom font downloading (`^CW`) and scaling styles.
+
+## Phase 5: Developer Experience (DX) & Professional Features
+1. **Physical Units**: Allow dimensions in `mm`, `cm`, and `inch` with auto-conversion to dots based on DPI (203/300/600).
+2. **ZPL Variables & Template Support**: Implement placeholders for dynamic data binding and `^DF`/`^XF` template workflows.
+3. **Batch Printing**: Logic for grouping multiple labels into a single print job.
+4. **Serialization**: Support for JSON serialization of label layouts.
 
 ## Additional Plans: 
-1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components**
+1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components.**
+2. **Implement Platform-specific Printing (BLE/USB) for Flutter Mobile apps.**
+3. **Native Direct-to-Device Printing support for Android/iOS (Zebra SDK Bridge).**

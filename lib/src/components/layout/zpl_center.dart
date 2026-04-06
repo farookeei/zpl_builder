@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
@@ -23,12 +24,26 @@ class ZplCenter extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+    if (child != null) {
+      double dx = absoluteOffset.dx + (size.width - child!.size.width) / 2;
+      double dy = absoluteOffset.dy + (size.height - child!.size.height) / 2;
+      child!.finalizeLayout(ZplOffset(dx, dy));
+    }
+  }
+
+  @override
   void compile(ZplContext context) {
     if (child != null) {
-      double dx = offset.dx + (size.width - child!.size.width) / 2;
-      double dy = offset.dy + (size.height - child!.size.height) / 2;
-      child!.setOffset(ZplOffset(dx, dy));
       child!.compile(context);
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    if (child != null) {
+      child!.paint(canvas, offset);
     }
   }
 }

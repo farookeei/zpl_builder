@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../primitives/zpl_align_type.dart';
 import '../../layout/geometry.dart';
@@ -80,28 +81,41 @@ class ZplColumn extends ZplComponent {
   }
 
   @override
-  void compile(ZplContext context) {
-    double currentDy = offset.dy;
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+    double currentDy = absoluteOffset.dy;
 
     for (var child in children) {
-      double childDx = offset.dx;
+      double childDx = absoluteOffset.dx;
 
       switch (crossAxisAlignment) {
         case ZplCrossAxisAlignment.start:
-          childDx = offset.dx;
+          childDx = absoluteOffset.dx;
           break;
         case ZplCrossAxisAlignment.center:
-          childDx = offset.dx + (size.width - child.size.width) / 2;
+          childDx = absoluteOffset.dx + (size.width - child.size.width) / 2;
           break;
         case ZplCrossAxisAlignment.end:
-          childDx = offset.dx + (size.width - child.size.width);
+          childDx = absoluteOffset.dx + (size.width - child.size.width);
           break;
       }
 
-      child.setOffset(ZplOffset(childDx, currentDy));
-      child.compile(context);
-
+      child.finalizeLayout(ZplOffset(childDx, currentDy));
       currentDy += child.size.height + spacing;
+    }
+  }
+
+  @override
+  void compile(ZplContext context) {
+    for (var child in children) {
+      child.compile(context);
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    for (var child in children) {
+      child.paint(canvas, offset);
     }
   }
 }

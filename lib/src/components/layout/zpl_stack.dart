@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import '../base/zpl_component.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
@@ -24,11 +25,24 @@ class ZplStack extends ZplComponent {
   }
 
   @override
+  void finalizeLayout(ZplOffset absoluteOffset) {
+    setOffset(absoluteOffset);
+    for (var child in children) {
+      child.finalizeLayout(absoluteOffset);
+    }
+  }
+
+  @override
   void compile(ZplContext context) {
     for (var child in children) {
-      // Stacked components all share the base offset
-      child.setOffset(offset);
       child.compile(context);
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Offset offset) {
+    for (var child in children) {
+      child.paint(canvas, offset);
     }
   }
 }
