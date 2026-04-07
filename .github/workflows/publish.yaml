@@ -1,0 +1,61 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers only on version tags like v0.0.5
+
+jobs:
+  publish:
+    permissions:
+      id-token: write # Required for OIDC publishing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify Version Match
+        run: |
+          # Get version from pubspec.yaml
+          PUBSPEC_VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2)
+          # Get version from tag (removing the 'v' prefix)
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          
+          echo "Pubspec version: $PUBSPEC_VERSION"
+          echo "Tag version: $TAG_VERSION"
+          
+          if [ "$PUBSPEC_VERSION" != "$TAG_VERSION" ]; then
+            echo "❌ Error: Version in pubspec.yaml ($PUBSPEC_VERSION) does not match Git tag ($TAG_VERSION)"
+            exit 1
+          fi
+
+      - name: Verify Changelog Entry
+        run: |
+          PUBSPEC_VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2)
+          if ! grep -q "## $PUBSPEC_VERSION" CHANGELOG.md; then
+            echo "❌ Error: CHANGELOG.md is missing an entry for version $PUBSPEC_VERSION"
+            echo "Expected header format: ## $PUBSPEC_VERSION"
+            exit 1
+          fi
+
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Publish (Dry Run)
+        run: dart pub publish --dry-run
+
+      - name: Publish to pub.dev
+        run: dart pub publish --force
