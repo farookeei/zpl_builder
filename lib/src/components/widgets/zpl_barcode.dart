@@ -117,6 +117,7 @@ class ZplBarcode extends ZplComponent {
       // Fallback for invalid data
       canvas.drawRect(
         Rect.fromLTWH(this.offset.dx, this.offset.dy, size.width, size.height),
+        // ignore: deprecated_member_use
         Paint()..color = Colors.red.withOpacity(0.3),
       );
     }

@@ -28,5 +28,5 @@ class ZplLabelSize {
   ];
 
   @override
-  String toString() => name.isNotEmpty ? name : '${width}x${height}';
+  String toString() => name.isNotEmpty ? name : '$width x $height';
 }

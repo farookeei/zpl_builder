@@ -29,10 +29,6 @@ void main() {
       // 5. Verify Centered Main Barcode
       // 812 dots label, barcode widthRatio 3. (HU9988776655 is 12 chars * modules)
       expect(zpl.contains('^BY3^BCN,200,Y,N,N^FDHU9988776655^FS'), isTrue);
-      
-      // Print it for visual inspection once
-      print('--- GENERATED V0.0.3 ZPL ---');
-      print(zpl);
     });
   });
 }

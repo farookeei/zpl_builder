@@ -34,8 +34,11 @@ class ZplColumn extends ZplComponent {
 
     for (var child in children) {
       if (child is ZplExpanded || child is ZplSpacer) {
-        if (child is ZplExpanded) totalFlex += child.flex;
-        else totalFlex += (child as ZplSpacer).flex;
+        if (child is ZplExpanded) {
+          totalFlex += child.flex;
+        } else {
+          totalFlex += (child as ZplSpacer).flex;
+        }
       } else {
         // We MUST pass the parent's width constraints down, 
         // otherwise children (like Rows or Text) might assume infinite width

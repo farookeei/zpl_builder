@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/main.dart';
+import 'package:example/main.dart';
 
 void main() {
   testWidgets('ZPL Builder Example smoke test', (WidgetTester tester) async {

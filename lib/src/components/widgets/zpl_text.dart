@@ -60,7 +60,7 @@ class ZplText extends ZplComponent {
     context.addCommand('^A${font.fontName},${font.height.toInt()},${font.width.toInt()}');
 
     if (maxLines > 1 || textAlign != ZplTextAlign.left) {
-      context.addCommand('^FB${size.width.toInt()},${maxLines},0,${textAlign.command},0');
+      context.addCommand('^FB${size.width.toInt()},$maxLines,0,${textAlign.command},0');
     }
 
     context.addCommand('^FD$text^FS\n');

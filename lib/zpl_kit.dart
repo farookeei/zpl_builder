@@ -2,7 +2,7 @@
 ///
 /// This package allows you to design labels with components like `ZplColumn`, `ZplRow`,
 /// `ZplText`, and `ZplBarcode` without manually calculating absolute coordinates.
-library zpl_kit;
+library;
 
 // Base
 export 'src/components/base/zpl_component.dart';

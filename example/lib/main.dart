@@ -274,8 +274,9 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
   }
 
   Widget _buildPreviewView() {
-    if (_lastRoot == null)
+    if (_lastRoot == null) {
       return const Center(child: Text('Generate ZPL to see Preview'));
+    }
 
     return Container(
       color: Colors.grey[300], // "Desk" surface
@@ -295,6 +296,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.black.withOpacity(0.05),
             offset: const Offset(0, -2),
             blurRadius: 5,
@@ -310,7 +312,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
               Expanded(
                 flex: 3,
                 child: DropdownButtonFormField<ZplLabelSize>(
-                  value: _selectedSize,
+                  initialValue: _selectedSize,
                   decoration: const InputDecoration(
                     labelText: 'Label Size',
                     border: OutlineInputBorder(),

@@ -28,8 +28,11 @@ class ZplRow extends ZplComponent {
     for (int i = 0; i < children.length; i++) {
       final child = children[i];
       if (child is ZplExpanded || child is ZplSpacer) {
-        if (child is ZplExpanded) totalFlex += child.flex;
-        else totalFlex += (child as ZplSpacer).flex;
+        if (child is ZplExpanded) {
+          totalFlex += child.flex;
+        } else {
+          totalFlex += (child as ZplSpacer).flex;
+        }
       } else {
         child.performLayout(constraints.copyWith(
           minWidth: 0, 
