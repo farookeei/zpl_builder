@@ -12,7 +12,7 @@ class ZplPadding extends ZplComponent {
 
   @override
   void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
-    child.performLayout(constraints);
+    child.performLayout(constraints.deflate(padding));
     setSize(
       ZplSize(
         child.size.width + padding.horizontal,

@@ -19,8 +19,8 @@ void main() {
       // The FB width for the columns is flexible based on space sharing.
       expect(zpl.contains('^FB'), isTrue, reason: 'Should use Field Blocks for all text');
 
-      // 3. Verify Divider spans the label
-      expect(zpl.contains('^GB812,2,2^FS'), isTrue, reason: 'Divider should be full width');
+      // 3. Verify Divider spans the label (width is 812 - 30 margin*2 = 752)
+      expect(zpl.contains('^GB752,2,2^FS'), isTrue, reason: 'Divider should respect padding');
 
       // 4. Verify PO section split
       expect(zpl.contains('^FDPO#: PO-88229911^FS'), isTrue);

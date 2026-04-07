@@ -1,3 +1,5 @@
+import '../primitives/zpl_edge_insets.dart';
+
 class ZplSize {
   final double width;
   final double height;
@@ -43,6 +45,15 @@ class ZplConstraints {
       maxWidth: maxWidth ?? this.maxWidth,
       minHeight: minHeight ?? this.minHeight,
       maxHeight: maxHeight ?? this.maxHeight,
+    );
+  }
+
+  ZplConstraints deflate(ZplEdgeInsets padding) {
+    return ZplConstraints(
+      minWidth: (minWidth - padding.horizontal).clamp(0, double.infinity),
+      maxWidth: (maxWidth - padding.horizontal).clamp(0, double.infinity),
+      minHeight: (minHeight - padding.vertical).clamp(0, double.infinity),
+      maxHeight: (maxHeight - padding.vertical).clamp(0, double.infinity),
     );
   }
 }

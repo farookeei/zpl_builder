@@ -57,7 +57,7 @@ class ZplText extends ZplComponent {
   @override
   void compile(ZplContext context) {
     context.addCommand('^FO${offset.dx.toInt()},${offset.dy.toInt()}');
-    context.addCommand('^A${font.fontName},${font.height.toInt()},${font.width.toInt()}');
+    context.addCommand('^A${font.fontName}N,${font.height.toInt()},${font.width.toInt()}');
 
     if (maxLines > 1 || textAlign != ZplTextAlign.left) {
       context.addCommand('^FB${size.width.toInt()},$maxLines,0,${textAlign.command},0');

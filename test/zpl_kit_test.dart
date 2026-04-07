@@ -35,10 +35,10 @@ void main() {
     // ZplColumn sets root at 0,0
     // ZplText is at 0,0
     // ZplText height with size 35 is 35.
-    // ZplPadding has top padding 10. Offset Y should be 35 + 10 = 45.
-    // ZplBarcode should be at Y=45. Let's check:
+    // ZplPadding has top padding 10. Offset Y should be 39 + 10 = 49.
+    // ZplBarcode should be at Y=49. Let's check:
     expect(
-      zpl.contains('^FO0,45'),
+      zpl.contains('^FO0,49'),
       isTrue,
       reason: 'Barcode should be shifted down by text height + padding',
     );
