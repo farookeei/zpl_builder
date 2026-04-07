@@ -3,6 +3,12 @@ description: "A declarative layout engine for generating Zebra Programming Langu
 version: 0.0.4
 repository: https://github.com/farookeei/zpl_kit
 homepage: https://github.com/farookeei/zpl_kit
+topics:
+  - zebra
+  - zpl
+  - printer
+  - thermal
+  - label
 
 
 environment:
