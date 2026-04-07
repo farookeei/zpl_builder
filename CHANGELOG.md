@@ -1,6 +1,6 @@
-## 0.0.4 - 2026-04-06
+## 0.0.4 - 2026-04-07
 
-### ✨ Major Architectural Upgrade
+### Major Architectural Upgrade
 - **3-Pass Layout Engine**: Refactored the internal engine to separate size calculation, coordinate assignment, and rendering.
   - Pass 1: `performLayout` (Bottom-Up sizing)
   - Pass 2: `finalizeLayout` (Top-Down absolute positioning)
@@ -8,7 +8,7 @@
 - **Native Preview Support**: Added `ZplPreview` widget for instant, offline visual label preview without Labelary API.
 - **Offline Barcode Rendering**: Integrated `barcode` package for high-fidelity 1D barcode previews on the Flutter canvas.
 
-### 🚀 Components & Core
+### Components & Core
 - **ZplPreview**: New widget for rendering ZPL layouts directly to a Flutter canvas.
 - **Improved Performance**: Separating coordinate calculation from ZPL generation speeds up complex label builds.
 - **Refined Layouts**: `ZplColumn` and `ZplRow` now handle coordinate propagation more robustly.

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/main.dart';
 
@@ -8,12 +7,13 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     // Verify that the app title is present.
-    expect(find.text('ZPL Builder Example'), findsAtLeast(1));
+    expect(find.text('ZPL Kit Example'), findsAtLeast(1));
 
-    // Verify that the 'Regenerate ZPL' button exists.
-    expect(find.text('Regenerate ZPL'), findsOneWidget);
+    // Verify that the 'Refresh' button exists.
+    expect(find.text('Refresh'), findsOneWidget);
 
     // Verify that some ZPL code is generated (starts with ^XA).
-    expect(find.textContaining('^XA'), findsOneWidget);
+    // The ZPL code view has selectable text starting with the built ZPL.
+    expect(find.textContaining('^XA'), findsAtLeast(1));
   });
 }
