@@ -167,25 +167,26 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
           ),
 
           // Section 3: Large Barcode
-          ZplPadding(
-            padding: ZplEdgeInsets.only(left: 70, top: 20),
-            child: ZplBarcode(
-              '12345678',
-              height: 270,
-              widthRatio: 5,
-              printText: true,
+          ZplCenter(
+            child: ZplPadding(
+              padding: ZplEdgeInsets.only(top: 20),
+              child: ZplBarcode(
+                '12345678',
+                height: 270,
+                widthRatio: 5,
+                printText: true,
+              ),
             ),
           ),
-
           ZplSpacer(flex: 1),
 
           // Section 4: Bottom Split Box
           ZplStack(
             children: [
-              ZplGraphicBox(width: 760, height: 250, thickness: 3),
+              ZplGraphicBox(width: 760, height: 220, thickness: 3),
               ZplPadding(
                 padding: ZplEdgeInsets.only(left: 380),
-                child: ZplGraphicBox(width: 3, height: 250, thickness: 3),
+                child: ZplGraphicBox(width: 3, height: 220, thickness: 3),
               ),
               ZplPadding(
                 padding: ZplEdgeInsets.all(35),
@@ -199,7 +200,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 ),
               ),
               ZplPadding(
-                padding: ZplEdgeInsets.only(left: 450, top: 40),
+                padding: ZplEdgeInsets.only(left: 450, top: 30),
                 child: ZplText('CA', font: ZplFont.helvetica(size: 195)),
               ),
             ],
@@ -281,10 +282,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: Center(
-          child: ZplPreview(
-            root: _lastRoot!,
-            labelSize: _selectedSize,
-          ),
+          child: ZplPreview(root: _lastRoot!, labelSize: _selectedSize),
         ),
       ),
     );

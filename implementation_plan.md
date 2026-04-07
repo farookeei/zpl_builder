@@ -61,7 +61,13 @@ lib/
 3. **Batch Printing**: Logic for grouping multiple labels into a single print job.
 4. **Serialization**: Support for JSON serialization of label layouts.
 
+## Phase 6: Declarative Layout Enhancements (v0.1.0+)
+1. **Vertical Dividers**: Implement `ZplVerticalDivider` that automatically spans parent height using constraints.
+2. **Flexbox Consolidation**: Enable full `MainAxisAlignment` (Center, SpaceBetween, SpaceAround) in `ZplRow` and `ZplColumn` to eliminate manual offsets.
+3. **Intrinsic Sizing**: Support `IntrinsicWidth` and `IntrinsicHeight` for components that need to size themselves based on children before layout.
+
 ## Additional Plans: 
 1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components.**
 2. **Implement Platform-specific Printing (BLE/USB) for Flutter Mobile apps.**
 3. **Native Direct-to-Device Printing support for Android/iOS (Zebra SDK Bridge).**
+
