@@ -1,19 +1,18 @@
+# Workflow to automate publishing zpl_kit to pub.dev
 name: Publish to pub.dev
 
 on:
   push:
     tags:
-      - 'v*' # Triggers only on version tags like v0.0.5
+      - 'v*' # Trigger on any tag starting with v (e.g., v0.0.4)
 
 jobs:
-  publish:
-    permissions:
-      id-token: write # Required for OIDC publishing
+  # PHASE 1: Quality Checks (Analyze & Test)
+  checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -24,38 +23,29 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Verify Version Match
-        run: |
-          # Get version from pubspec.yaml
-          PUBSPEC_VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2)
-          # Get version from tag (removing the 'v' prefix)
-          TAG_VERSION=${GITHUB_REF#refs/tags/v}
-          
-          echo "Pubspec version: $PUBSPEC_VERSION"
-          echo "Tag version: $TAG_VERSION"
-          
-          if [ "$PUBSPEC_VERSION" != "$TAG_VERSION" ]; then
-            echo "❌ Error: Version in pubspec.yaml ($PUBSPEC_VERSION) does not match Git tag ($TAG_VERSION)"
-            exit 1
-          fi
-
-      - name: Verify Changelog Entry
-        run: |
-          PUBSPEC_VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2)
-          if ! grep -q "## $PUBSPEC_VERSION" CHANGELOG.md; then
-            echo "❌ Error: CHANGELOG.md is missing an entry for version $PUBSPEC_VERSION"
-            echo "Expected header format: ## $PUBSPEC_VERSION"
-            exit 1
-          fi
-
       - name: Analyze code
         run: flutter analyze
 
       - name: Run tests
         run: flutter test
 
-      - name: Publish (Dry Run)
-        run: dart pub publish --dry-run
+      - name: Verify Version & Changelog
+        run: |
+          PUBSPEC_VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2)
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          if [ "$PUBSPEC_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: version mismatch ($PUBSPEC_VERSION vs tag $TAG_VERSION)"
+            exit 1
+          fi
+          if ! grep -q "## $PUBSPEC_VERSION" CHANGELOG.md; then
+            echo "Error: CHANGELOG.md missing entries for $PUBSPEC_VERSION"
+            exit 1
+          fi
 
-      - name: Publish to pub.dev
-        run: dart pub publish --force
+  # PHASE 2: Official Publishing
+  publish:
+    needs: checks # Only run if Phase 1 passes!
+    permissions:
+      id-token: write # Required for OIDC
+    # The official Google/Dart reusable workflow
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
