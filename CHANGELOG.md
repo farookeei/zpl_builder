@@ -1,3 +1,11 @@
+## 0.0.6 - 2026-04-08
+
+* **Industrial Accuracy**: Refactored `ZplBarcode` to use exact ISO-standard module math for width calculation (Code 128/39), ensuring pixel-perfect alignment on physical Zebra printers.
+* **Labelary Integration**: Added `ZplLabelaryPreview` widget and `LabelaryService` for 100% accurate, cloud-powered label previews.
+* **Refined Rendering**: Removed ellipsis from `ZplText` preview to match real thermal printer behavior (physical clipping vs digital truncation).
+* **Network Support**: Added `http` dependency to handle remote cloud rendering requests.
+* **Example Enhancements**: Updated example app with a new "Cloud Preview" tab for side-by-side comparison between Native and Labelary rendering engines.
+
 ## 0.0.5 - 2026-04-08
 
 * **Maintenance Release:** Force republish to resolve stuck pub.dev analysis queue.

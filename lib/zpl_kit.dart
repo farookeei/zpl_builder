@@ -39,3 +39,8 @@ export 'src/components/widgets/zpl_divider.dart';
 
 // Preview Widget
 export 'src/widgets/zpl_preview.dart';
+export 'src/widgets/zpl_labelary_preview.dart';
+
+// Services
+export 'src/services/labelary_service.dart';
+

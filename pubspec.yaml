@@ -1,6 +1,6 @@
 name: zpl_kit
 description: "A declarative layout engine for generating Zebra Programming Language (ZPL) strings with Flexbox-like components."
-version: 0.0.5
+version: 0.0.6
 repository: https://github.com/farookeei/zpl_kit
 homepage: https://github.com/farookeei/zpl_kit
 topics:
@@ -19,6 +19,7 @@ dependencies:
   flutter:
     sdk: flutter
   barcode: ^2.2.6
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

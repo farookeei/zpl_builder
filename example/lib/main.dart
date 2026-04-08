@@ -226,7 +226,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ZPL Kit Example'),
@@ -235,6 +235,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
             tabs: [
               Tab(icon: Icon(Icons.code), text: 'ZPL Code'),
               Tab(icon: Icon(Icons.preview), text: 'Native Preview'),
+              Tab(icon: Icon(Icons.cloud_done), text: 'Labelary Preview'),
             ],
           ),
         ),
@@ -242,7 +243,11 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
           children: [
             Expanded(
               child: TabBarView(
-                children: [_buildZplView(), _buildPreviewView()],
+                children: [
+                  _buildZplView(), 
+                  _buildPreviewView(),
+                  _buildLabelaryPreviewView(),
+                ],
               ),
             ),
             _buildControls(),
@@ -286,6 +291,26 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: Center(
           child: ZplPreview(root: _lastRoot!, labelSize: _selectedSize),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLabelaryPreviewView() {
+    if (_lastRoot == null) {
+      return const Center(child: Text('Generate ZPL to see Labelary Preview'));
+    }
+
+    return Container(
+      color: Colors.grey[300], // "Desk" surface
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+        child: Center(
+          child: ZplLabelaryPreview(
+            root: _lastRoot!, 
+            labelSize: _selectedSize,
+            dpmm: 8, // Assuming 203 DPI since 800 dots / 4 inches = 200 (~203)
+          ),
         ),
       ),
     );

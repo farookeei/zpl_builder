@@ -58,13 +58,33 @@ final label = ZplColumn(
 
 ---
 
+## Live Previews
+
+`zpl_kit` includes two distinct preview widgets to supercharge your label development without needing a physical printer next to your desk.
+
+| Native Preview (`ZplPreview`) | Cloud Preview (`ZplLabelaryPreview`) |
+| :--- | :--- |
+| **Speed:** Instant / Offline | **Speed:** Requires Network Call |
+| **Accuracy:** High | **Accuracy:** 100% True-to-Printer (Labelary API) |
+| **Use Case:** Rapid iterative development | **Use Case:** Final layout verifications before printing |
+
+### The Proof
+
+Our rendering engine uses exact ISO-standard math for barcode scaling and text constraints, ensuring that what you see in the preview is **exactly** what you get on the physical Zebra thermal printer.
+
+| Labelary Preview | Physical Printed Label |
+| :---: | :---: |
+| <img src="doc/images/labelarypreview.webp" width="200" alt="Labelary Preview Screenshot" /> | <img src="doc/images/printed_label.webp" width="200" alt="Physical Printed Label Photo" /> |
+
+---
+
 ## Installation
 
 Add `zpl_kit` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  zpl_kit: ^0.0.3
+  zpl_kit: ^0.0.6
 ```
 
 ---
