@@ -88,26 +88,28 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                   ),
                 ],
               ),
-              ZplColumn(
-                crossAxisAlignment: ZplCrossAxisAlignment.start,
-                children: [
-                  ZplText(
-                    'Intershipping, Inc.',
-                    font: ZplFont.helvetica(size: 60),
-                  ),
-                  ZplText(
-                    '1000 Shipping Lane',
-                    font: ZplFont.helvetica(size: 35),
-                  ),
-                  ZplText(
-                    'Shelbyville TN 38102',
-                    font: ZplFont.helvetica(size: 35),
-                  ),
-                  ZplText(
-                    'United States (USA)',
-                    font: ZplFont.helvetica(size: 35),
-                  ),
-                ],
+              ZplExpanded(
+                child: ZplColumn(
+                  crossAxisAlignment: ZplCrossAxisAlignment.start,
+                  children: [
+                    ZplText(
+                      'Intershipping, Inc.',
+                      font: ZplFont.helvetica(size: 60),
+                    ),
+                    ZplText(
+                      '1000 Shipping Lane',
+                      font: ZplFont.helvetica(size: 35),
+                    ),
+                    ZplText(
+                      'Shelbyville TN 38102',
+                      font: ZplFont.helvetica(size: 35),
+                    ),
+                    ZplText(
+                      'United States (USA)',
+                      font: ZplFont.helvetica(size: 35),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -139,18 +141,18 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 padding: ZplEdgeInsets.only(left: 550),
                 child: ZplStack(
                   children: [
-                    ZplGraphicBox(width: 170, height: 170, thickness: 3),
+                    ZplGraphicBox(width: 200, height: 170, thickness: 3),
                     ZplPadding(
                       padding: ZplEdgeInsets.only(top: 45, left: 35),
                       child: ZplColumn(
                         children: [
                           ZplText(
                             'Permit',
-                            font: ZplFont(fontName: 'A', height: 30, width: 30),
+                            font: ZplFont(fontName: 'A', height: 20, width: 20),
                           ),
                           ZplText(
                             '123456',
-                            font: ZplFont(fontName: 'A', height: 30, width: 30),
+                            font: ZplFont(fontName: 'A', height: 20, width: 20),
                           ),
                         ],
                       ),

@@ -34,15 +34,14 @@ class ZplText extends ZplComponent {
       textDirection: TextDirection.ltr,
       textAlign: textAlign.toFlutter(),
       maxLines: maxLines,
-      ellipsis: '...',
     );
 
-    double effectiveMaxWidth = constraints.hasBoundedWidth 
-        ? max(1.0, constraints.maxWidth) 
+    double effectiveMaxWidth = constraints.hasBoundedWidth
+        ? max(1.0, constraints.maxWidth)
         : double.infinity;
 
     textPainter.layout(
-      minWidth: constraints.minWidth, 
+      minWidth: constraints.minWidth,
       maxWidth: effectiveMaxWidth,
     );
 
@@ -57,10 +56,12 @@ class ZplText extends ZplComponent {
   @override
   void compile(ZplContext context) {
     context.addCommand('^FO${offset.dx.toInt()},${offset.dy.toInt()}');
-    context.addCommand('^A${font.fontName}N,${font.height.toInt()},${font.width.toInt()}');
+    context.addCommand(
+        '^A${font.fontName}N,${font.height.toInt()},${font.width.toInt()}');
 
     if (maxLines > 1 || textAlign != ZplTextAlign.left) {
-      context.addCommand('^FB${size.width.toInt()},$maxLines,0,${textAlign.command},0');
+      context.addCommand(
+          '^FB${size.width.toInt()},$maxLines,0,${textAlign.command},0');
     }
 
     context.addCommand('^FD$text^FS\n');
@@ -81,7 +82,6 @@ class ZplText extends ZplComponent {
       textDirection: TextDirection.ltr,
       textAlign: textAlign.toFlutter(),
       maxLines: maxLines,
-      ellipsis: '...',
     );
 
     textPainter.layout(maxWidth: size.width);

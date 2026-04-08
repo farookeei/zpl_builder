@@ -33,9 +33,29 @@ class ZplBarcode extends ZplComponent {
 
   @override
   void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
-    // Basic heuristic for estimating barcode bounds
-    double estimatedWidth = data.length * 11 * widthRatio;
-    setSize(ZplSize(estimatedWidth, height + (printText ? 20 : 0)));
+    // Exact ZPL calculation for barcode width
+    // Code 128: 11 modules per character + 11 (start) + 11 (check) + 13 (stop)
+    // Code 39: Each char is 13 or 16 modules depending on narrow/wide ratio
+    
+    double modules = 0;
+    switch (type) {
+      case ZplBarcodeType.code128:
+        // (Data + Start + Check) * 11 modules + 2 extra for stop bar
+        modules = (data.length + 3) * 11 + 2;
+        break;
+      case ZplBarcodeType.code39:
+        // Basic Code 39 math (approximate but much closer than before)
+        modules = (data.length + 2) * 16; 
+        break;
+      default:
+        modules = data.length * 12;
+    }
+
+    final double calculatedWidth = modules * widthRatio;
+    // Human readable text adds some height
+    final double extraHeight = printText ? (widthRatio * 5 + 20) : 0;
+    
+    setSize(ZplSize(calculatedWidth, height + extraHeight));
   }
 
   @override
@@ -79,12 +99,14 @@ class ZplBarcode extends ZplComponent {
     }
 
     try {
+      final double textFontSize = (widthRatio * 6).clamp(12, 40);
+      
       final elements = barcode.make(
         data,
         width: size.width,
         height: height,
         drawText: printText,
-        fontHeight: printText ? 15.0 : null,
+        fontHeight: printText ? textFontSize : null,
       );
 
       final paint = Paint()..style = PaintingStyle.fill;
@@ -104,13 +126,19 @@ class ZplBarcode extends ZplComponent {
           final tp = TextPainter(
             text: TextSpan(
               text: el.text,
-              style: const TextStyle(
-                  color: Colors.black, fontSize: 15, fontFamily: 'monospace'),
+              style: TextStyle(
+                  color: Colors.black, 
+                  fontSize: textFontSize, 
+                  fontFamily: 'monospace',
+                  fontWeight: FontWeight.bold),
             ),
             textDirection: TextDirection.ltr,
           );
           tp.layout();
-          tp.paint(canvas, Offset(this.offset.dx + el.left, this.offset.dy + el.top));
+          
+          // Center the text under the barcode
+          final centerX = this.offset.dx + (size.width / 2) - (tp.width / 2);
+          tp.paint(canvas, Offset(centerX, this.offset.dy + el.top));
         }
       }
     } catch (e) {
