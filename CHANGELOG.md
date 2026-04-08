@@ -1,3 +1,8 @@
+## 0.0.5 - 2026-04-08
+
+* **Maintenance Release:** Force republish to resolve stuck pub.dev analysis queue.
+* Formatted source code to improve pub points score.
+
 ## 0.0.4 - 2026-04-07
 
 ### Major Architectural Upgrade
