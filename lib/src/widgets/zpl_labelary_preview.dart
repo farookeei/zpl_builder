@@ -1,8 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../components/base/zpl_component.dart';
-import '../primitives/zpl_label_size.dart';
-import '../services/labelary_service.dart';
 import '../../zpl_kit.dart';
 
 /// A widget that renders a visual preview of a [ZplComponent] tree
@@ -190,7 +187,7 @@ class _ZplLabelaryPreviewState extends State<ZplLabelaryPreview> {
           ),
           if (_isLoading)
             Container(
-              color: Colors.white.withOpacity(0.5),
+              color: Colors.white.withValues(alpha: 0.5),
               child: const Center(
                 child: CircularProgressIndicator(color: Colors.teal),
               ),

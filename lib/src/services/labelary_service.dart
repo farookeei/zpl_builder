@@ -6,7 +6,7 @@ class LabelaryService {
   static const String _baseUrl = 'https://api.labelary.com/v1/printers';
 
   /// Renders a ZPL string to a PNG image using the Labelary API.
-  /// 
+  ///
   /// [zpl] The raw ZPL code to render.
   /// [widthInches] Physical width of the label in inches.
   /// [heightInches] Physical height of the label in inches.
@@ -20,8 +20,9 @@ class LabelaryService {
     final widthStr = widthInches.toStringAsFixed(1);
     final heightStr = heightInches.toStringAsFixed(1);
 
-    final url = Uri.parse('$_baseUrl/${dpmm}dpmm/labels/${widthStr}x${heightStr}/0/');
-    
+    final url =
+        Uri.parse('$_baseUrl/${dpmm}dpmm/labels/${widthStr}x$heightStr/0/');
+
     final response = await http.post(
       url,
       headers: {
@@ -35,8 +36,7 @@ class LabelaryService {
       return response.bodyBytes;
     } else {
       throw Exception(
-        'Failed to render ZPL via Labelary. Status: ${response.statusCode}\nBody: ${response.body}'
-      );
+          'Failed to render ZPL via Labelary. Status: ${response.statusCode}\nBody: ${response.body}');
     }
   }
 }
