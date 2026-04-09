@@ -1,3 +1,7 @@
+## 0.0.6+1 - 2026-04-08
+
+* **Documentation**: Fixed missing images in README on pub.dev by switching to absolute URLs.
+
 ## 0.0.6 - 2026-04-08
 
 * **Industrial Accuracy**: Refactored `ZplBarcode` to use exact ISO-standard module math for width calculation (Code 128/39), ensuring pixel-perfect alignment on physical Zebra printers.

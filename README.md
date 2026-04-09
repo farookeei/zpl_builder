@@ -74,7 +74,7 @@ Our rendering engine uses exact ISO-standard math for barcode scaling and text c
 
 | Labelary Preview | Physical Printed Label |
 | :---: | :---: |
-| <img src="doc/images/labelarypreview.webp" width="200" alt="Labelary Preview Screenshot" /> | <img src="doc/images/printed_label.webp" width="200" alt="Physical Printed Label Photo" /> |
+| <img src="https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/labelarypreview.webp" width="200" alt="Labelary Preview Screenshot" /> | <img src="https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/printed_label.webp" width="200" alt="Physical Printed Label Photo" /> |
 
 ---
 
