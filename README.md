@@ -9,7 +9,7 @@ A powerful, declarative layout engine for generating Zebra Programming Language 
 
 ## Why ZplKit?
 
-Traditional ZPL generation involves constant string concatenation and error-prone absolute `^FO` (Field Origin) math. `zpl_kit` solves this by introducing a **two-pass layout engine** that automatically calculates positions based on parent constraints.
+Traditional ZPL generation involves constant string concatenation and error-prone absolute `^FO` (Field Origin) math. `zpl_kit` solves this by introducing a **three-pass layout engine** that automatically calculates positions based on parent constraints.
 
 - **Declarative UI**: Build labels just like you build Flutter widgets.
 - **Flexbox Power**: Use `Expanded`, `Spacer`, and flex-ratios to divide label space.
