@@ -30,13 +30,15 @@ class ZplPreview extends StatelessWidget {
       builder: (context, constraints) {
         // Calculate the scale based on the available width
         final double screenWidthSize = constraints.maxWidth;
-        final double logicalHeight = (screenWidthSize / labelSize.width) * labelSize.height;
+        final double logicalHeight =
+            (screenWidthSize / labelSize.width) * labelSize.height;
 
         return Center(
           child: Container(
             width: screenWidthSize,
             height: logicalHeight,
-            clipBehavior: Clip.hardEdge, // Ensure content doesn't leak onto the desk
+            clipBehavior:
+                Clip.hardEdge, // Ensure content doesn't leak onto the desk
             decoration: BoxDecoration(
               color: backgroundColor,
               boxShadow: [
@@ -70,7 +72,7 @@ class _ZplPainter extends CustomPainter {
     // We want to fit 'labelSize.width' dots into 'size.width' pixels
     final double scaleX = size.width / labelSize.width;
     final double scaleY = size.height / labelSize.height;
-    
+
     // Use the same scale for both axes to maintain aspect ratio
     final double scale = scaleX < scaleY ? scaleX : scaleY;
 
@@ -90,11 +92,11 @@ class _ZplPainter extends CustomPainter {
 
     // 4. Render the tree
     root.paint(canvas, Offset.zero);
-    
+
     canvas.restore();
   }
 
   @override
-  bool shouldRepaint(covariant _ZplPainter oldDelegate) => 
-    oldDelegate.root != root || oldDelegate.labelSize != labelSize;
+  bool shouldRepaint(covariant _ZplPainter oldDelegate) =>
+      oldDelegate.root != root || oldDelegate.labelSize != labelSize;
 }

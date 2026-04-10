@@ -36,7 +36,7 @@ class ZplBarcode extends ZplComponent {
     // Exact ZPL calculation for barcode width
     // Code 128: 11 modules per character + 11 (start) + 11 (check) + 13 (stop)
     // Code 39: Each char is 13 or 16 modules depending on narrow/wide ratio
-    
+
     double modules = 0;
     switch (type) {
       case ZplBarcodeType.code128:
@@ -45,7 +45,7 @@ class ZplBarcode extends ZplComponent {
         break;
       case ZplBarcodeType.code39:
         // Basic Code 39 math (approximate but much closer than before)
-        modules = (data.length + 2) * 16; 
+        modules = (data.length + 2) * 16;
         break;
       default:
         modules = data.length * 12;
@@ -54,7 +54,7 @@ class ZplBarcode extends ZplComponent {
     final double calculatedWidth = modules * widthRatio;
     // Human readable text adds some height
     final double extraHeight = printText ? (widthRatio * 5 + 20) : 0;
-    
+
     setSize(ZplSize(calculatedWidth, height + extraHeight));
   }
 
@@ -100,7 +100,7 @@ class ZplBarcode extends ZplComponent {
 
     try {
       final double textFontSize = (widthRatio * 6).clamp(12, 40);
-      
+
       final elements = barcode.make(
         data,
         width: size.width,
@@ -127,15 +127,15 @@ class ZplBarcode extends ZplComponent {
             text: TextSpan(
               text: el.text,
               style: TextStyle(
-                  color: Colors.black, 
-                  fontSize: textFontSize, 
+                  color: Colors.black,
+                  fontSize: textFontSize,
                   fontFamily: 'monospace',
                   fontWeight: FontWeight.bold),
             ),
             textDirection: TextDirection.ltr,
           );
           tp.layout();
-          
+
           // Center the text under the barcode
           final centerX = this.offset.dx + (size.width / 2) - (tp.width / 2);
           tp.paint(canvas, Offset(centerX, this.offset.dy + el.top));

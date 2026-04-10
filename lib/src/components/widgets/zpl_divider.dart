@@ -23,7 +23,8 @@ class ZplDivider extends ZplComponent {
   @override
   void compile(ZplContext context) {
     context.addCommand('^FO${offset.dx.toInt()},${offset.dy.toInt()}');
-    context.addCommand('^GB${size.width.toInt()},${thickness.toInt()},${thickness.toInt()}^FS\n');
+    context.addCommand(
+        '^GB${size.width.toInt()},${thickness.toInt()},${thickness.toInt()}^FS\n');
   }
 
   @override

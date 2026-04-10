@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zpl_kit/zpl_kit.dart';
 
-
 void main() {
   test('ZPL Kit compiles basic layout correctly', () {
     final zpl = ZplKit.build(
-
       ZplColumn(
         crossAxisAlignment: ZplCrossAxisAlignment.start,
         children: [

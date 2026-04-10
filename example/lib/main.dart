@@ -244,7 +244,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildZplView(), 
+                  _buildZplView(),
                   _buildPreviewView(),
                   _buildLabelaryPreviewView(),
                 ],
@@ -307,7 +307,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: Center(
           child: ZplLabelaryPreview(
-            root: _lastRoot!, 
+            root: _lastRoot!,
             labelSize: _selectedSize,
             dpmm: 8, // Assuming 203 DPI since 800 dots / 4 inches = 200 (~203)
           ),

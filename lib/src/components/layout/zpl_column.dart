@@ -40,15 +40,17 @@ class ZplColumn extends ZplComponent {
           totalFlex += (child as ZplSpacer).flex;
         }
       } else {
-        // We MUST pass the parent's width constraints down, 
+        // We MUST pass the parent's width constraints down,
         // otherwise children (like Rows or Text) might assume infinite width
         child.performLayout(ZplConstraints(
-          maxWidth: constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity,
+          maxWidth: constraints.hasBoundedWidth
+              ? constraints.maxWidth
+              : double.infinity,
           minWidth: 0,
           maxHeight: double.infinity,
           minHeight: 0,
         ));
-        
+
         totalUnflexedHeight += child.size.height;
         maxChildWidth = max(maxChildWidth, child.size.width);
       }

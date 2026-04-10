@@ -12,15 +12,18 @@ void main() {
       expect(zpl.contains('^LL1218'), isTrue);
       expect(zpl.contains('^XZ'), isTrue);
 
-      // 2. Verify Headers (Ship From & To columns) 
+      // 2. Verify Headers (Ship From & To columns)
       // Calculated: (812-60 margin-30 spacer)/2 = ~361 dots per col
       // The "To:" column should be at X ~ 30+361+30 = 421 or similar
-      expect(zpl.contains('^FO30,30^A0N,25,20'), isTrue, reason: 'Ship From: FO');
+      expect(zpl.contains('^FO30,30^A0N,25,20'), isTrue,
+          reason: 'Ship From: FO');
       // The FB width for the columns is flexible based on space sharing.
-      expect(zpl.contains('^FB'), isTrue, reason: 'Should use Field Blocks for all text');
+      expect(zpl.contains('^FB'), isTrue,
+          reason: 'Should use Field Blocks for all text');
 
       // 3. Verify Divider spans the label (width is 812 - 30 margin*2 = 752)
-      expect(zpl.contains('^GB752,2,2^FS'), isTrue, reason: 'Divider should respect padding');
+      expect(zpl.contains('^GB752,2,2^FS'), isTrue,
+          reason: 'Divider should respect padding');
 
       // 4. Verify PO section split
       expect(zpl.contains('^FDPO#: PO-88229911^FS'), isTrue);
@@ -64,9 +67,12 @@ class ZplInternalTest {
                   crossAxisAlignment: ZplCrossAxisAlignment.start,
                   children: [
                     ZplText('Ship From:', font: ZplFont.helvetica(size: 25)),
-                    ZplText(warehouseName, font: ZplFont.helvetica(size: 30), maxLines: 1),
-                    ZplText(warehouseAddr, font: ZplFont.helvetica(size: 30), maxLines: 2),
-                    ZplText(warehouseCityStateZip, font: ZplFont.helvetica(size: 30)),
+                    ZplText(warehouseName,
+                        font: ZplFont.helvetica(size: 30), maxLines: 1),
+                    ZplText(warehouseAddr,
+                        font: ZplFont.helvetica(size: 30), maxLines: 2),
+                    ZplText(warehouseCityStateZip,
+                        font: ZplFont.helvetica(size: 30)),
                   ],
                 ),
               ),
@@ -81,8 +87,10 @@ class ZplInternalTest {
                   children: [
                     ZplText('To:', font: ZplFont.helvetica(size: 25)),
                     ZplText(customerName, font: ZplFont.helvetica(size: 30)),
-                    ZplText(customerAddr1, font: ZplFont.helvetica(size: 30), maxLines: 2),
-                    ZplText(customerCityStateZip, font: ZplFont.helvetica(size: 30)),
+                    ZplText(customerAddr1,
+                        font: ZplFont.helvetica(size: 30), maxLines: 2),
+                    ZplText(customerCityStateZip,
+                        font: ZplFont.helvetica(size: 30)),
                   ],
                 ),
               ),
@@ -93,27 +101,30 @@ class ZplInternalTest {
             padding: ZplEdgeInsets.only(top: 20),
             child: ZplRow(
               children: [
-                  ZplExpanded(
-                    child: ZplColumn(
-                      crossAxisAlignment: ZplCrossAxisAlignment.start,
-                      children: [
-                        ZplText('Ship to Postal Code', font: ZplFont.helvetica(size: 25)),
-                        ZplPadding(
-                          padding: ZplEdgeInsets.only(top: 10),
-                          child: ZplBarcode('38101', height: 40, widthRatio: 2),
-                        ),
-                      ],
-                    ),
+                ZplExpanded(
+                  child: ZplColumn(
+                    crossAxisAlignment: ZplCrossAxisAlignment.start,
+                    children: [
+                      ZplText('Ship to Postal Code',
+                          font: ZplFont.helvetica(size: 25)),
+                      ZplPadding(
+                        padding: ZplEdgeInsets.only(top: 10),
+                        child: ZplBarcode('38101', height: 40, widthRatio: 2),
+                      ),
+                    ],
                   ),
-                  ZplExpanded(
-                    child: ZplColumn(
-                      crossAxisAlignment: ZplCrossAxisAlignment.start,
-                      children: [
-                        ZplText('Carrier:', font: ZplFont.helvetica(size: 35)),
-                        ZplText(carrierVal, font: ZplFont.helvetica(size: 25), textAlign: ZplTextAlign.left),
-                      ],
-                    ),
+                ),
+                ZplExpanded(
+                  child: ZplColumn(
+                    crossAxisAlignment: ZplCrossAxisAlignment.start,
+                    children: [
+                      ZplText('Carrier:', font: ZplFont.helvetica(size: 35)),
+                      ZplText(carrierVal,
+                          font: ZplFont.helvetica(size: 25),
+                          textAlign: ZplTextAlign.left),
+                    ],
                   ),
+                ),
               ],
             ),
           ),
@@ -127,8 +138,13 @@ class ZplInternalTest {
           // ROW 4: PO & CONTAINER
           ZplRow(
             children: [
-              ZplExpanded(child: ZplText('PO#: $orderNumber', font: ZplFont.helvetica(size: 40))),
-              ZplExpanded(child: ZplText('Container: $container', font: ZplFont.helvetica(size: 40), textAlign: ZplTextAlign.right)),
+              ZplExpanded(
+                  child: ZplText('PO#: $orderNumber',
+                      font: ZplFont.helvetica(size: 40))),
+              ZplExpanded(
+                  child: ZplText('Container: $container',
+                      font: ZplFont.helvetica(size: 40),
+                      textAlign: ZplTextAlign.right)),
             ],
           ),
 
@@ -161,4 +177,3 @@ class ZplInternalTest {
     return ZplKit.build(root, labelSize: ZplLabelSize(812, 1218));
   }
 }
-

@@ -20,7 +20,8 @@ class ZplRow extends ZplComponent {
 
   @override
   void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
-    double currentRemainingWidth = constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity;
+    double currentRemainingWidth =
+        constraints.hasBoundedWidth ? constraints.maxWidth : double.infinity;
     double totalUnflexedWidth = 0;
     double maxChildHeight = 0;
     int totalFlex = 0;
@@ -35,15 +36,16 @@ class ZplRow extends ZplComponent {
         }
       } else {
         child.performLayout(constraints.copyWith(
-          minWidth: 0, 
+          minWidth: 0,
           maxWidth: currentRemainingWidth,
         ));
-        
+
         totalUnflexedWidth += child.size.width;
         maxChildHeight = max(maxChildHeight, child.size.height);
-        
+
         if (currentRemainingWidth != double.infinity) {
-          currentRemainingWidth = max(0.0, currentRemainingWidth - child.size.width - spacing);
+          currentRemainingWidth =
+              max(0.0, currentRemainingWidth - child.size.width - spacing);
         }
       }
     }

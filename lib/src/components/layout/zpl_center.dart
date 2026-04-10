@@ -13,12 +13,15 @@ class ZplCenter extends ZplComponent {
   void performLayout([ZplConstraints constraints = const ZplConstraints()]) {
     if (child != null) {
       child!.performLayout(constraints.copyWith(minWidth: 0, minHeight: 0));
-      double width = constraints.hasBoundedWidth ? constraints.maxWidth : child!.size.width;
-      double height = constraints.hasBoundedHeight ? constraints.maxHeight : child!.size.height;
+      double width = constraints.hasBoundedWidth
+          ? constraints.maxWidth
+          : child!.size.width;
+      double height = constraints.hasBoundedHeight
+          ? constraints.maxHeight
+          : child!.size.height;
       setSize(ZplSize(width, height));
     } else {
-      setSize(ZplSize(
-          constraints.hasBoundedWidth ? constraints.maxWidth : 0, 
+      setSize(ZplSize(constraints.hasBoundedWidth ? constraints.maxWidth : 0,
           constraints.hasBoundedHeight ? constraints.maxHeight : 0));
     }
   }

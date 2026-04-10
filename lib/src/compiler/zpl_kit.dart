@@ -15,9 +15,11 @@ class ZplKit {
   static String build(ZplComponent root, {ZplLabelSize? labelSize}) {
     // 1. Layout Pass
     ZplConstraints constraints = labelSize != null
-        ? ZplConstraints(maxWidth: labelSize.width.toDouble(), maxHeight: labelSize.height.toDouble())
+        ? ZplConstraints(
+            maxWidth: labelSize.width.toDouble(),
+            maxHeight: labelSize.height.toDouble())
         : const ZplConstraints();
-    
+
     root.performLayout(constraints);
 
     // 2. Finalize Pass (Assign absolute offsets)

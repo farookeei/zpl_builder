@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../../zpl_kit.dart';
+import '../compiler/zpl_kit.dart';
+import '../components/base/zpl_component.dart';
+import '../primitives/zpl_label_size.dart';
+import '../services/labelary_service.dart';
 
 /// A widget that renders a visual preview of a [ZplComponent] tree
 /// by calling the external Labelary.com API and displaying the returned image.
@@ -123,7 +126,8 @@ class _ZplLabelaryPreviewState extends State<ZplLabelaryPreview> {
               color: widget.backgroundColor,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
+                  // ignore: deprecated_member_use
+                  color: Colors.black.withOpacity(0.2),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
@@ -187,7 +191,8 @@ class _ZplLabelaryPreviewState extends State<ZplLabelaryPreview> {
           ),
           if (_isLoading)
             Container(
-              color: Colors.white.withValues(alpha: 0.5),
+              // ignore: deprecated_member_use
+              color: Colors.white.withOpacity(0.5),
               child: const Center(
                 child: CircularProgressIndicator(color: Colors.teal),
               ),

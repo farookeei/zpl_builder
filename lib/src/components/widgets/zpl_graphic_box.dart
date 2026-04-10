@@ -51,10 +51,14 @@ class ZplGraphicBox extends ZplComponent {
 
     // In ZPL ^GB,thickness is inwards.
     final rect = Rect.fromLTWH(
-      this.offset.dx + (paint.style == PaintingStyle.stroke ? thickness / 2 : 0),
-      this.offset.dy + (paint.style == PaintingStyle.stroke ? thickness / 2 : 0),
-      (width - (paint.style == PaintingStyle.stroke ? thickness : 0)).clamp(0, double.infinity),
-      (height - (paint.style == PaintingStyle.stroke ? thickness : 0)).clamp(0, double.infinity),
+      this.offset.dx +
+          (paint.style == PaintingStyle.stroke ? thickness / 2 : 0),
+      this.offset.dy +
+          (paint.style == PaintingStyle.stroke ? thickness / 2 : 0),
+      (width - (paint.style == PaintingStyle.stroke ? thickness : 0))
+          .clamp(0, double.infinity),
+      (height - (paint.style == PaintingStyle.stroke ? thickness : 0))
+          .clamp(0, double.infinity),
     );
 
     if (rounding > 0) {
