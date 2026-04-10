@@ -1,6 +1,6 @@
 name: zpl_kit
 description: "A declarative layout engine for generating Zebra Programming Language (ZPL) strings with Flexbox-like components."
-version: 0.0.6+1
+version: 0.0.6+2
 repository: https://github.com/farookeei/zpl_kit
 homepage: https://github.com/farookeei/zpl_kit
 topics:

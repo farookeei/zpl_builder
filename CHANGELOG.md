@@ -1,3 +1,9 @@
+## 0.0.6+2 - 2026-04-10
+
+* **Analysis Fix**: Resolved a circular dependency between the main library and internal widgets that caused pub.dev analysis to fail.
+* **Compatibility**: Improved support for older Flutter stable versions by replacing `withValues()` with the more broadly supported `withOpacity()`.
+* **Maintenance**: Formatted all source files to improve pub.dev scoring and adhere to Dart style guidelines.
+
 ## 0.0.6+1 - 2026-04-08
 
 * **Documentation**: Fixed missing images in README on pub.dev by switching to absolute URLs.

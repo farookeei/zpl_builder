@@ -84,7 +84,7 @@ Add `zpl_kit` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  zpl_kit: ^0.0.6
+  zpl_kit: ^0.0.6+2
 ```
 
 ---
