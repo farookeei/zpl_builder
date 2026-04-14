@@ -1,4 +1,4 @@
-/// A library for building ZPL (Zebra Programming Language) labels using a declarative, Flexbox-like layout engine.
+/// A library for building and printing ZPL (Zebra Programming Language) labels using a declarative, Flexbox-like layout engine.
 ///
 /// This package allows you to design labels with components like `ZplColumn`, `ZplRow`,
 /// `ZplText`, and `ZplBarcode` without manually calculating absolute coordinates.
@@ -43,3 +43,8 @@ export 'src/widgets/zpl_labelary_preview.dart';
 
 // Services
 export 'src/services/labelary_service.dart';
+
+// Printing
+export 'src/printing/printer_connector.dart';
+export 'src/printing/tcp_printer.dart';
+export 'src/printing/http_printer.dart';

@@ -1,6 +1,6 @@
 # ZPL Kit
 
-A powerful, declarative layout engine for generating Zebra Programming Language (ZPL) strings in Flutter. Stop manually calculating absolute coordinates and start building labels with a modern, Flexbox-like API.
+A powerful, declarative layout engine for generating Zebra Programming Language (ZPL) strings in Flutter. Stop manually calculating absolute coordinates and start building labels with a modern, Flexbox-like API—now with built-in support for **Network and Web-based printing.**
 
 [![pub package](https://img.shields.io/pub/v/zpl_kit.svg)](https://pub.dev/packages/zpl_kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -84,7 +84,7 @@ Add `zpl_kit` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  zpl_kit: ^0.0.6+2
+  zpl_kit: ^0.0.7
 ```
 
 ---
@@ -135,6 +135,52 @@ void main() {
   );
   
   print(zpl);
+}
+```
+
+---
+
+## Printing Support
+
+`zpl_kit` makes it easy to send your generated ZPL strings to physical printers. It provides an extensible OOP architecture to support different connection types.
+
+### 1. Network Printing (TCP/IP)
+Best for Mobile and Desktop apps connecting directly to Zebra printers on the local network (usually port 9100).
+
+```dart
+// Connect, send, and disconnect automatically
+final success = await NetworkZplPrinter.printOnce(
+  host: '192.168.1.100',
+  zpl: zplCode,
+);
+
+// OR handle the connection manually for multiple labels
+final printer = NetworkZplPrinter(host: '192.168.1.100');
+await printer.connect();
+await printer.send(zplCode);
+await printer.disconnect();
+```
+
+### 2. Web & REST Printing (HTTP)
+Perfect for Web apps or environments using a REST bridge. This works on all platforms (Mobile, Desktop, and Web).
+
+```dart
+final success = await HttpZplPrinter.printOnce(
+  endpoint: Uri.parse('http://your-printer-ip/pstprnt'),
+  zpl: zplCode,
+);
+```
+
+### 3. Custom Connectors
+Need Bluetooth or USB support? You can easily create your own connector by extending `ZplPrinterConnector`.
+
+```dart
+class BluetoothZplPrinter extends ZplPrinterConnector {
+  @override
+  Future<bool> send(String zpl) async {
+    // Your bluetooth implementation here
+  }
+  // ... implement other methods
 }
 ```
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zpl_kit/zpl_kit.dart';
-import 'printer_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -417,9 +416,9 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
   Future<void> _printToPrinter() async {
     setState(() => _isPrinting = true);
-    final success = await ZebraPrinterService.printZPL(
-      printerIp: _ipController.text,
-      zplCommand: _zplCode,
+    final success = await TcpZplPrinter.printOnce(
+      host: _ipController.text,
+      zpl: _zplCode,
     );
     if (mounted) {
       setState(() => _isPrinting = false);
