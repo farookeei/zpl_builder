@@ -4,13 +4,13 @@ import 'printer_connector.dart';
 /// A printer connector that communicates over HTTP/REST.
 /// Useful for Web environments or printers behind an HTTP proxy.
 class HttpZplPrinter extends ZplPrinterConnector {
-  final Uri endpoint;
+  final Uri baseUrl;
   final Map<String, String>? headers;
 
   ZplPrinterConnectionState _state = ZplPrinterConnectionState.disconnected;
 
   HttpZplPrinter({
-    required this.endpoint,
+    required this.baseUrl,
     this.headers,
   });
 
@@ -31,32 +31,73 @@ class HttpZplPrinter extends ZplPrinterConnector {
 
   @override
   Future<bool> send(String zpl) async {
-    try {
-      final response = await http.post(
-        endpoint,
-        headers: headers ?? {'Content-Type': 'text/plain'},
-        body: zpl,
-      );
+    final String base = baseUrl.toString().replaceAll(RegExp(r'/$'), '');
 
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return true;
-      } else {
-        throw ZplPrinterException(
-          'HTTP Error: ${response.statusCode} - ${response.body}',
+    final attempts = [
+      {
+        'name': '/pstprnt',
+        'url': Uri.parse('$base/pstprnt'),
+        'headers': {'Content-Type': 'text/plain'},
+        'body': zpl,
+      },
+      {
+        'name': '/zpl',
+        'url': Uri.parse('$base/zpl'),
+        'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+        'body': 'zpl=${Uri.encodeComponent(zpl)}',
+      },
+      {
+        'name': '/print',
+        'url': Uri.parse('$base/print'),
+        'headers': {'Content-Type': 'text/plain'},
+        'body': zpl,
+      },
+      {
+        'name': '/ (root)',
+        'url': Uri.parse('$base/'),
+        'headers': {'Content-Type': 'application/octet-stream'},
+        'body': zpl,
+      },
+    ];
+
+    final List<String> errors = [];
+
+    for (final attempt in attempts) {
+      try {
+        final Map<String, String> requestHeaders = Map<String, String>.from(headers ?? {});
+        // Fallback to the attempt's default header if the user hasn't provided it
+        (attempt['headers'] as Map<String, String>).forEach((key, value) {
+          requestHeaders.putIfAbsent(key, () => value);
+        });
+
+        final response = await http.post(
+          attempt['url'] as Uri,
+          headers: requestHeaders,
+          body: attempt['body'] as String,
         );
+
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          return true; // Print success
+        } else {
+          errors.add('${attempt['name']} returned HTTP ${response.statusCode}');
+        }
+      } catch (e) {
+        errors.add('${attempt['name']} failed: $e');
       }
-    } catch (e) {
-      throw ZplPrinterException('Failed to send ZPL via HTTP', e);
     }
+
+    throw ZplPrinterException(
+      'All HTTP endpoints failed. Errors: ${errors.join(', ')}',
+    );
   }
 
   /// Convenience method to send ZPL via HTTP POST.
   static Future<bool> printOnce({
-    required Uri endpoint,
+    required Uri baseUrl,
     required String zpl,
     Map<String, String>? headers,
   }) async {
-    final printer = HttpZplPrinter(endpoint: endpoint, headers: headers);
+    final printer = HttpZplPrinter(baseUrl: baseUrl, headers: headers);
     await printer.connect();
     return await printer.send(zpl);
   }

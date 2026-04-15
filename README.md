@@ -166,7 +166,7 @@ Perfect for Web apps or environments using a REST bridge. This works on all plat
 
 ```dart
 final success = await HttpZplPrinter.printOnce(
-  endpoint: Uri.parse('http://your-printer-ip/pstprnt'),
+  baseUrl: Uri.parse('http://your-printer-ip'),
   zpl: zplCode,
 );
 ```
