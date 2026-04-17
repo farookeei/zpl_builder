@@ -5,6 +5,9 @@ import '../primitives/zpl_label_size.dart';
 
 /// The entry point for the ZPL layout engine.
 class ZplKit {
+  /// Private constructor to prevent instantiation.
+  ZplKit._();
+
   /// Builds a complete ZPL label from the provided [root] component tree.
   ///
   /// This method performs two passes:

@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 
 /// A service class for interacting with the Labelary API to generate label previews.
 class LabelaryService {
+  /// Private constructor to prevent instantiation.
+  LabelaryService._();
+
   static const String _baseUrl = 'https://api.labelary.com/v1/printers';
 
   /// Renders a ZPL string to a PNG image using the Labelary API.

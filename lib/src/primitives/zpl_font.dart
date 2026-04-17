@@ -9,6 +9,7 @@ class ZplFont {
   /// The height of the font in dots.
   final double height;
 
+  /// Creates a [ZplFont] with the given [fontName], [width] and [height].
   const ZplFont({
     this.fontName = '0',
     this.width = 30.0,

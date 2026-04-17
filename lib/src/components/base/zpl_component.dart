@@ -4,6 +4,10 @@ import '../../compiler/zpl_context.dart';
 
 /// The base class for all UI components in the ZPL layout engine.
 abstract class ZplComponent {
+  /// Default constructor for [ZplComponent].
+  ZplComponent();
+
+
   ZplSize? _size;
   ZplOffset? _offset;
 

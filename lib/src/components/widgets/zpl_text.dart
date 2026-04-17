@@ -6,12 +6,21 @@ import '../../primitives/zpl_font.dart';
 import '../../layout/geometry.dart';
 import '../../compiler/zpl_context.dart';
 
+/// A component that renders text using ZPL fonts.
 class ZplText extends ZplComponent {
+  /// The string of text to render.
   final String text;
+
+  /// The font to use for rendering the text.
   final ZplFont font;
+
+  /// How the text should be aligned horizontally.
   final ZplTextAlign textAlign;
+
+  /// The maximum number of lines for the text block.
   final int maxLines;
 
+  /// Creates a [ZplText] with the specified [text] and optional styling parameters.
   ZplText(
     this.text, {
     this.font = const ZplFont(),

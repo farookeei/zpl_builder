@@ -14,9 +14,13 @@ enum ZplPrinterConnectionState {
 
 /// Base class for all printer exceptions.
 class ZplPrinterException implements Exception {
+  /// The error message.
   final String message;
+
+  /// The inner platform or generic exception that caused this failure, if any.
   final dynamic originalError;
 
+  /// Creates a [ZplPrinterException] with a [message] and optional [originalError].
   ZplPrinterException(this.message, [this.originalError]);
 
   @override
@@ -32,7 +36,7 @@ abstract class ZplPrinterConnector {
   Future<void> disconnect();
 
   /// Sends a ZPL command/string to the printer.
-  /// Returns [true] if the data was successfully handed off to the printer/transport.
+  /// Returns `true` if the data was successfully handed off to the printer/transport.
   Future<bool> send(String zpl);
 
   /// Returns the current connection state.

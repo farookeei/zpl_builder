@@ -5,8 +5,10 @@ import '../../compiler/zpl_context.dart';
 
 /// An empty flexible space component for [ZplRow] or [ZplColumn].
 class ZplSpacer extends ZplComponent {
+  /// The flex factor to use for this spacer.
   final int flex;
 
+  /// Creates a [ZplSpacer] with an optional [flex] factor (defaults to 1).
   ZplSpacer({
     this.flex = 1,
   });

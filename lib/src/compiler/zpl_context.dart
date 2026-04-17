@@ -1,5 +1,8 @@
 /// A context used during the compilation phase to collect generated ZPL commands.
 class ZplContext {
+  /// Creates a new [ZplContext].
+  ZplContext();
+
   final StringBuffer _buffer = StringBuffer();
 
   /// Adds a ZPL [command] to the generated output.

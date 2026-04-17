@@ -5,12 +5,22 @@ import '../../compiler/zpl_context.dart';
 
 /// A component that renders a graphic box or line.
 class ZplGraphicBox extends ZplComponent {
+  /// The width of the graphic box in dots.
   final double width;
-  final double height;
-  final int thickness;
-  final int rounding;
-  final bool reversePrint; // ^FR
 
+  /// The height of the graphic box in dots.
+  final double height;
+
+  /// The line thickness of the box.
+  final int thickness;
+
+  /// The degree of rounding of the corners (0 to 8).
+  final int rounding;
+
+  /// Whether to print the box in reverse (white on black).
+  final bool reversePrint;
+
+  /// Creates a [ZplGraphicBox] with the given dimensions and styling.
   ZplGraphicBox({
     this.width = 100,
     this.height = 100,

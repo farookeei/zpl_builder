@@ -1,15 +1,50 @@
 import 'package:flutter/material.dart';
 
-enum ZplCrossAxisAlignment { start, center, end }
+/// Alignment on the cross axis.
+enum ZplCrossAxisAlignment {
+  /// Aligns to the start of the cross axis.
+  start,
 
-enum ZplMainAxisAlignment { start, center, end, spaceBetween, spaceAround }
-
-enum ZplTextAlign {
-  left,
+  /// Aligns to the center of the cross axis.
   center,
+
+  /// Aligns to the end of the cross axis.
+  end
+}
+
+/// Alignment on the main axis.
+enum ZplMainAxisAlignment {
+  /// Aligns to the start of the main axis.
+  start,
+
+  /// Aligns to the center of the main axis.
+  center,
+
+  /// Aligns to the end of the main axis.
+  end,
+
+  /// Spaces children out equally across the main axis with space between.
+  spaceBetween,
+
+  /// Spaces children out equally across the main axis with space around.
+  spaceAround
+}
+
+/// Alignment for text blocks in ZPL.
+enum ZplTextAlign {
+  /// Aligns text to the left.
+  left,
+
+  /// Aligns text to the center.
+  center,
+
+  /// Aligns text to the right.
   right,
+
+  /// Justifies the text.
   justified;
 
+  /// Converts the text alignment to a Flutter equivalent.
   TextAlign toFlutter() {
     switch (this) {
       case ZplTextAlign.left:
@@ -23,6 +58,7 @@ enum ZplTextAlign {
     }
   }
 
+  /// Retrieves the ZPL command character equivalent for this text alignment.
   String get command {
     switch (this) {
       case ZplTextAlign.left:

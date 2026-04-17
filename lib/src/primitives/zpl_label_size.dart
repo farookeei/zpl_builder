@@ -9,6 +9,7 @@ class ZplLabelSize {
   /// Label name (e.g., 'Shipping 4x6').
   final String name;
 
+  /// Creates a [ZplLabelSize] with the given [width], [height], and an optional [name].
   const ZplLabelSize(this.width, this.height, {this.name = ''});
 
   /// Standard 4x6 inch shipping label (812x1218 dots @ 203 DPI).

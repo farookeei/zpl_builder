@@ -5,8 +5,10 @@ import '../../compiler/zpl_context.dart';
 
 /// A component that perfectly centers its child within the available constraints.
 class ZplCenter extends ZplComponent {
+  /// The optional child component to center.
   final ZplComponent? child;
 
+  /// Creates a [ZplCenter] with an optional [child].
   ZplCenter({this.child});
 
   @override

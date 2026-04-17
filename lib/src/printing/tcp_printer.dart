@@ -5,13 +5,19 @@ import 'printer_connector.dart';
 /// A printer connector that communicates over TCP/IP (Socket).
 /// Usually works on port 9100 for Zebra printers.
 class TcpZplPrinter extends ZplPrinterConnector {
+  /// The host IP or hostname of the printer.
   final String host;
+
+  /// The port for the printer. Defaults to 9100.
   final int port;
+
+  /// The maximum duration to wait for a connection attempt.
   final Duration timeout;
 
   Socket? _socket;
   ZplPrinterConnectionState _state = ZplPrinterConnectionState.disconnected;
 
+  /// Creates a [TcpZplPrinter] with the target [host], and optional [port] and [timeout].
   TcpZplPrinter({
     required this.host,
     this.port = 9100,

@@ -7,11 +7,18 @@ import '../../compiler/zpl_context.dart';
 import 'zpl_expanded.dart';
 import 'zpl_spacer.dart';
 
+/// A layout component that arranges its children in a horizontal array.
 class ZplRow extends ZplComponent {
+  /// The children components to arrange horizontally.
   final List<ZplComponent> children;
+
+  /// How the children should be placed along the cross (vertical) axis.
   final ZplCrossAxisAlignment crossAxisAlignment;
+
+  /// The space to place between each child.
   final double spacing;
 
+  /// Creates a [ZplRow] with the given [children].
   ZplRow({
     required this.children,
     this.crossAxisAlignment = ZplCrossAxisAlignment.start,

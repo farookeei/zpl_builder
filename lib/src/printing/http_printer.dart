@@ -4,11 +4,15 @@ import 'printer_connector.dart';
 /// A printer connector that communicates over HTTP/REST.
 /// Useful for Web environments or printers behind an HTTP proxy.
 class HttpZplPrinter extends ZplPrinterConnector {
+  /// The base URL of the HTTP printer.
   final Uri baseUrl;
+
+  /// Optional HTTP headers to include in the requests.
   final Map<String, String>? headers;
 
   ZplPrinterConnectionState _state = ZplPrinterConnectionState.disconnected;
 
+  /// Creates an [HttpZplPrinter] with a [baseUrl] and optional [headers].
   HttpZplPrinter({
     required this.baseUrl,
     this.headers,

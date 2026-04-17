@@ -5,8 +5,10 @@ import '../../compiler/zpl_context.dart';
 
 /// A divider widget that spans the width of its parent container.
 class ZplDivider extends ZplComponent {
+  /// The thickness (height) of the divider line in dots.
   final double thickness;
 
+  /// Creates a [ZplDivider] with an optional line [thickness].
   ZplDivider({this.thickness = 1.0});
 
   @override

@@ -6,8 +6,10 @@ import '../../compiler/zpl_context.dart';
 
 /// A component that overlays its children on top of each other.
 class ZplStack extends ZplComponent {
+  /// The components to stack on top of each other. The first child is at the bottom.
   final List<ZplComponent> children;
 
+  /// Creates a [ZplStack] with the given [children].
   ZplStack({required this.children});
 
   @override

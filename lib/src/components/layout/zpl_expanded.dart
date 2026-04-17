@@ -5,9 +5,13 @@ import '../../compiler/zpl_context.dart';
 
 /// A component that expands a child of a [ZplRow] or [ZplColumn] to fill the available space.
 class ZplExpanded extends ZplComponent {
+  /// The flex factor to use for this expanded component.
   final int flex;
+
+  /// The child component to expand.
   final ZplComponent child;
 
+  /// Creates a [ZplExpanded] with the given [child] and optional [flex] factor.
   ZplExpanded({
     this.flex = 1,
     required this.child,
