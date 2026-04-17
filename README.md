@@ -149,13 +149,13 @@ Best for Mobile and Desktop apps connecting directly to Zebra printers on the lo
 
 ```dart
 // Connect, send, and disconnect automatically
-final success = await NetworkZplPrinter.printOnce(
+final success = await TcpZplPrinter.printOnce(
   host: '192.168.1.100',
   zpl: zplCode,
 );
 
 // OR handle the connection manually for multiple labels
-final printer = NetworkZplPrinter(host: '192.168.1.100');
+final printer = TcpZplPrinter(host: '192.168.1.100');
 await printer.connect();
 await printer.send(zplCode);
 await printer.disconnect();
