@@ -73,12 +73,13 @@ class ZplGraphicBox extends ZplComponent {
 
     if (rounding > 0) {
       // ZPL rounding is 0-8, where 8 is a circle.
-      final radius = Radius.circular((rounding / 8) * (min(width, height) / 2));
+      final radius =
+          Radius.circular((rounding / 8) * (_min(width, height) / 2));
       canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), paint);
     } else {
       canvas.drawRect(rect, paint);
     }
   }
 
-  double min(double a, double b) => a < b ? a : b;
+  double _min(double a, double b) => a < b ? a : b;
 }

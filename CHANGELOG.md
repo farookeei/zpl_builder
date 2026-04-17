@@ -1,3 +1,8 @@
+## 0.0.7 - 2026-04-17
+
+* **Direct Printing**: Formally integrated `TcpZplPrinter` (Socket) and `HttpZplPrinter` (REST) into the core library for direct communication with thermal printers across Mobile and Web.
+* **Documentation**: Expanded API documentation across all core components and printing services.
+
 ## 0.0.6+2 - 2026-04-10
 
 * **Analysis Fix**: Resolved a circular dependency between the main library and internal widgets that caused pub.dev analysis to fail.

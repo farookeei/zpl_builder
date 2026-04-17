@@ -7,7 +7,6 @@ abstract class ZplComponent {
   /// Default constructor for [ZplComponent].
   ZplComponent();
 
-
   ZplSize? _size;
   ZplOffset? _offset;
 

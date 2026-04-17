@@ -68,7 +68,8 @@ class HttpZplPrinter extends ZplPrinterConnector {
 
     for (final attempt in attempts) {
       try {
-        final Map<String, String> requestHeaders = Map<String, String>.from(headers ?? {});
+        final Map<String, String> requestHeaders =
+            Map<String, String>.from(headers ?? {});
         // Fallback to the attempt's default header if the user hasn't provided it
         (attempt['headers'] as Map<String, String>).forEach((key, value) {
           requestHeaders.putIfAbsent(key, () => value);

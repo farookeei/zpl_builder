@@ -29,6 +29,9 @@ class ZplPrinterException implements Exception {
 
 /// Abstract contract for any printer connector (Network, Bluetooth, USB, HTTP).
 abstract class ZplPrinterConnector {
+  /// Default constructor for [ZplPrinterConnector].
+  ZplPrinterConnector();
+
   /// Opens a connection to the printer.
   Future<void> connect();
 
