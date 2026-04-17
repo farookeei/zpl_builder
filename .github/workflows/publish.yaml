@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Check Formatting (10 pub.dev points)
+        run: dart format --output=none --set-exit-if-changed .
+
       - name: Analyze code
         run: flutter analyze
 
