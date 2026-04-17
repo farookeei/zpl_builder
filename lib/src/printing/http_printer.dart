@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart' as http;
 import 'printer_connector.dart';
 
@@ -36,64 +38,35 @@ class HttpZplPrinter extends ZplPrinterConnector {
   @override
   Future<bool> send(String zpl) async {
     final String base = baseUrl.toString().replaceAll(RegExp(r'/$'), '');
+    final requestUrl = Uri.parse('$base/pstprnt');
 
-    final attempts = [
-      {
-        'name': '/pstprnt',
-        'url': Uri.parse('$base/pstprnt'),
-        'headers': {'Content-Type': 'text/plain'},
-        'body': zpl,
-      },
-      {
-        'name': '/zpl',
-        'url': Uri.parse('$base/zpl'),
-        'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
-        'body': 'zpl=${Uri.encodeComponent(zpl)}',
-      },
-      {
-        'name': '/print',
-        'url': Uri.parse('$base/print'),
-        'headers': {'Content-Type': 'text/plain'},
-        'body': zpl,
-      },
-      {
-        'name': '/ (root)',
-        'url': Uri.parse('$base/'),
-        'headers': {'Content-Type': 'application/octet-stream'},
-        'body': zpl,
-      },
-    ];
+    try {
+      final Map<String, String> requestHeaders = {
+        'Content-Type': 'text/plain',
+        ...?headers,
+      };
 
-    final List<String> errors = [];
+      log('Sending ZPL to: $requestUrl');
 
-    for (final attempt in attempts) {
-      try {
-        final Map<String, String> requestHeaders =
-            Map<String, String>.from(headers ?? {});
-        // Fallback to the attempt's default header if the user hasn't provided it
-        (attempt['headers'] as Map<String, String>).forEach((key, value) {
-          requestHeaders.putIfAbsent(key, () => value);
-        });
+      final response = await http.post(
+        requestUrl,
+        headers: requestHeaders,
+        body: zpl,
+      );
+      
+      log('Response Status: ${response.statusCode}');
 
-        final response = await http.post(
-          attempt['url'] as Uri,
-          headers: requestHeaders,
-          body: attempt['body'] as String,
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return true; // Print success
+      } else {
+        throw ZplPrinterException(
+          'Printer returned HTTP ${response.statusCode}. Body: ${response.body}',
         );
-
-        if (response.statusCode >= 200 && response.statusCode < 300) {
-          return true; // Print success
-        } else {
-          errors.add('${attempt['name']} returned HTTP ${response.statusCode}');
-        }
-      } catch (e) {
-        errors.add('${attempt['name']} failed: $e');
       }
+    } catch (e) {
+      throw ZplPrinterException('HTTP print failed: $e');
     }
 
-    throw ZplPrinterException(
-      'All HTTP endpoints failed. Errors: ${errors.join(', ')}',
-    );
   }
 
   /// Convenience method to send ZPL via HTTP POST.

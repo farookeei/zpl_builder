@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+enum PrinterType { tcp, http }
+
 class ZplExamplePage extends StatefulWidget {
   const ZplExamplePage({super.key});
 
@@ -39,6 +41,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
     text: '172.17.9.11',
   );
   bool _isPrinting = false;
+  PrinterType _printerType = PrinterType.tcp;
 
   @override
   void initState() {
@@ -381,6 +384,34 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
           const SizedBox(height: 12),
           Row(
             children: [
+              const Text('Mode:', style: TextStyle(fontSize: 12)),
+              const SizedBox(width: 8),
+              SegmentedButton<PrinterType>(
+                segments: const [
+                  ButtonSegment(
+                    value: PrinterType.tcp,
+                    label: Text('TCP (9100)'),
+                    icon: Icon(Icons.settings_ethernet, size: 16),
+                  ),
+                  ButtonSegment(
+                    value: PrinterType.http,
+                    label: Text('HTTP (REST)'),
+                    icon: Icon(Icons.http, size: 16),
+                  ),
+                ],
+                selected: {_printerType},
+                onSelectionChanged: (set) {
+                  setState(() => _printerType = set.first);
+                },
+                style: const ButtonStyle(
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: _generateZpl,
@@ -416,15 +447,38 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
   Future<void> _printToPrinter() async {
     setState(() => _isPrinting = true);
-    final success = await TcpZplPrinter.printOnce(
-      host: _ipController.text,
-      zpl: _zplCode,
-    );
+    bool success = false;
+    String error = '';
+
+    try {
+      if (_printerType == PrinterType.tcp) {
+        success = await TcpZplPrinter.printOnce(
+          host: _ipController.text,
+          zpl: _zplCode,
+        );
+      } else {
+        // Ensure the IP has a scheme
+        String url = _ipController.text;
+        if (!url.startsWith('http')) {
+          url = 'http://$url';
+        }
+        success = await HttpZplPrinter.printOnce(
+          baseUrl: Uri.parse(url),
+          zpl: _zplCode,
+        );
+      }
+    } catch (e) {
+      success = false;
+      error = ': $e';
+    }
+
     if (mounted) {
       setState(() => _isPrinting = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(success ? 'Label Sent to Printer' : 'Printing Failed'),
+          content: Text(
+            success ? 'Label Sent to $_printerType' : 'Printing Failed$error',
+          ),
           backgroundColor: success ? Colors.green : Colors.red,
         ),
       );
