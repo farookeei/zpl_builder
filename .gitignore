@@ -7,7 +7,7 @@ build/
 
 # Do not commit the following folder
 .pub/
-doc/
+doc/api/
 
 # If you're building a package, you might want to commit these files
 # to specify the version constraints you've tested with.

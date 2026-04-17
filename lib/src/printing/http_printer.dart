@@ -53,7 +53,7 @@ class HttpZplPrinter extends ZplPrinterConnector {
         headers: requestHeaders,
         body: zpl,
       );
-      
+
       log('Response Status: ${response.statusCode}');
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -66,7 +66,6 @@ class HttpZplPrinter extends ZplPrinterConnector {
     } catch (e) {
       throw ZplPrinterException('HTTP print failed: $e');
     }
-
   }
 
   /// Convenience method to send ZPL via HTTP POST.

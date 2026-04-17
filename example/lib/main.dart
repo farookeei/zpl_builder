@@ -403,9 +403,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 onSelectionChanged: (set) {
                   setState(() => _printerType = set.first);
                 },
-                style: const ButtonStyle(
-                  visualDensity: VisualDensity.compact,
-                ),
+                style: const ButtonStyle(visualDensity: VisualDensity.compact),
               ),
             ],
           ),
