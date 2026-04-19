@@ -1,8 +1,6 @@
 # ZPL Kit
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/demo.webp" width="600" alt="ZPL Kit Demo" />
-</p>
+![ZPL Kit Demo](https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/demo.gif)
 
 A powerful, declarative layout engine for generating Zebra Programming Language (ZPL) strings in Flutter. Stop manually calculating absolute coordinates and start building labels with a modern, Flexbox-like API—now with built-in support for **Network and Web-based printing.**
 
@@ -78,7 +76,7 @@ Our rendering engine uses exact ISO-standard math for barcode scaling and text c
 
 | Labelary Preview | Physical Printed Label |
 | :---: | :---: |
-| <img src="https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/labelarypreview.webp" width="200" alt="Labelary Preview Screenshot" /> | <img src="https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/printed_label.webp" width="200" alt="Physical Printed Label Photo" /> |
+| ![Labelary Preview Screenshot](https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/labelarypreview.webp) | ![Physical Printed Label Photo](https://raw.githubusercontent.com/farookeei/zpl_kit/main/doc/images/printed_label.webp) |
 
 ---
 
