@@ -47,15 +47,27 @@ class ZplBarcode extends ZplComponent {
         // Basic Code 39 math (approximate but much closer than before)
         modules = (data.length + 2) * 16;
         break;
+      case ZplBarcodeType.qrCode:
+        // QR Code module estimation based on data length (very approximate)
+        modules =
+            (data.length * 0.5) + 20; // Will be scaled by widthRatio later
+        break;
       default:
         modules = data.length * 12;
     }
 
-    final double calculatedWidth = modules * widthRatio;
+    final double calculatedWidth = type == ZplBarcodeType.qrCode
+        ? modules * widthRatio
+        : modules * widthRatio;
+
     // Human readable text adds some height
     final double extraHeight = printText ? (widthRatio * 5 + 20) : 0;
 
-    setSize(ZplSize(calculatedWidth, height + extraHeight));
+    // QR codes are square in bounding box, typically
+    final double calculatedHeight =
+        type == ZplBarcodeType.qrCode ? calculatedWidth : height + extraHeight;
+
+    setSize(ZplSize(calculatedWidth, calculatedHeight));
   }
 
   @override
@@ -67,14 +79,25 @@ class ZplBarcode extends ZplComponent {
   @override
   void compile(ZplContext context) {
     context.addCommand('^FO${offset.dx.toInt()},${offset.dy.toInt()}');
-    context.addCommand('^BY${widthRatio.toInt()}');
 
-    // N: normal orientation, Y/N: print interpretation line, N: print interpretation line above barcode
-    String printInterpretation = printText ? 'Y' : 'N';
-    context.addCommand(
-      '^${type.command}N,${height.toInt()},$printInterpretation,N,N',
-    );
-    context.addCommand('^FD$data^FS\n');
+    if (type == ZplBarcodeType.qrCode) {
+      // ^BQa,b,c
+      // a: field orientation (N)
+      // b: model (2)
+      // c: magnification factor (1-10)
+      context.addCommand('^BQN,2,${widthRatio.toInt().clamp(1, 10)}');
+      // QA, prefix is required for QR code data in ZPL
+      context.addCommand('^FDQA,$data^FS\n');
+    } else {
+      context.addCommand('^BY${widthRatio.toInt()}');
+
+      // N: normal orientation, Y/N: print interpretation line, N: print interpretation line above barcode
+      String printInterpretation = printText ? 'Y' : 'N';
+      context.addCommand(
+        '^${type.command}N,${height.toInt()},$printInterpretation,N,N',
+      );
+      context.addCommand('^FD$data^FS\n');
+    }
   }
 
   @override
@@ -96,17 +119,24 @@ class ZplBarcode extends ZplComponent {
       case ZplBarcodeType.ean13:
         barcode = bc.Barcode.ean13();
         break;
+      case ZplBarcodeType.qrCode:
+        barcode = bc.Barcode.qrCode();
+        break;
     }
 
     try {
       final double textFontSize = (widthRatio * 6).clamp(12, 40);
 
+      final double actualHeight =
+          type == ZplBarcodeType.qrCode ? size.width : height;
+
       final elements = barcode.make(
         data,
         width: size.width,
-        height: height,
-        drawText: printText,
-        fontHeight: printText ? textFontSize : null,
+        height: actualHeight,
+        drawText: type != ZplBarcodeType.qrCode && printText,
+        fontHeight:
+            (type != ZplBarcodeType.qrCode && printText) ? textFontSize : null,
       );
 
       final paint = Paint()..style = PaintingStyle.fill;

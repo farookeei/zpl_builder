@@ -15,7 +15,9 @@ class ZplKit {
   /// 2. A compilation pass to generate the final ZPL string.
   ///
   /// Optional [labelSize] allows setting fixed dimensions for the label.
-  static String build(ZplComponent root, {ZplLabelSize? labelSize}) {
+  /// Optional [printQuantity] adds a `^PQ` command to specify how many copies to print (default 1).
+  static String build(ZplComponent root,
+      {ZplLabelSize? labelSize, int printQuantity = 1}) {
     // 1. Layout Pass
     ZplConstraints constraints = labelSize != null
         ? ZplConstraints(
@@ -39,7 +41,24 @@ class ZplKit {
 
     root.compile(context);
 
+    if (printQuantity > 1) {
+      context.addCommand('^PQ$printQuantity\n');
+    }
+
     context.addCommand('^XZ'); // End Format
     return context.zplData;
+  }
+
+  /// Builds a batch of ZPL labels by generating ZPL for each component in [labels]
+  /// and concatenating them into a single string.
+  ///
+  /// This is useful for printing multiple different labels in a single network request.
+  static String buildBatch(List<ZplComponent> labels,
+      {ZplLabelSize? labelSize}) {
+    final buffer = StringBuffer();
+    for (var label in labels) {
+      buffer.write(build(label, labelSize: labelSize));
+    }
+    return buffer.toString();
   }
 }

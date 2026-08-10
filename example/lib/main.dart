@@ -41,6 +41,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
     text: '172.17.9.11',
   );
   bool _isPrinting = false;
+  bool _isBatchDemo = false;
   PrinterType _printerType = PrinterType.tcp;
 
   @override
@@ -70,7 +71,7 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
         children: [
           // Section 1: Logo & Title
           ZplRow(
-            spacing: 30,
+            mainAxisAlignment: ZplMainAxisAlignment.spaceBetween,
             children: [
               ZplStack(
                 children: [
@@ -170,17 +171,30 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
             child: ZplGraphicBox(width: 760, height: 3, thickness: 3),
           ),
 
-          // Section 3: Large Barcode
-          ZplCenter(
-            child: ZplPadding(
-              padding: ZplEdgeInsets.only(top: 20),
-              child: ZplBarcode(
-                '12345678',
-                height: 270,
-                widthRatio: 5,
-                printText: true,
+          // Section 3: Large Barcode & QR Code
+          ZplRow(
+            // mainAxisAlignment: ZplMainAxisAlignment.spaceAround,
+            crossAxisAlignment: ZplCrossAxisAlignment.end,
+            children: [
+              ZplPadding(
+                padding: ZplEdgeInsets.only(top: 20),
+                child: ZplBarcode(
+                  '12345678',
+                  height: 270,
+                  widthRatio: 5,
+                  printText: true,
+                ),
               ),
-            ),
+              ZplText("scsd"),
+              ZplPadding(
+                padding: ZplEdgeInsets.only(top: 20),
+                child: ZplBarcode(
+                  'https://flutter.dev',
+                  type: ZplBarcodeType.qrCode,
+                  widthRatio: 5,
+                ),
+              ),
+            ],
           ),
           ZplSpacer(flex: 1),
 
@@ -221,7 +235,18 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
     final root = _buildRoot();
     setState(() {
       _lastRoot = root;
-      _zplCode = ZplKit.build(root, labelSize: ZplLabelSize(width, height));
+      if (_isBatchDemo) {
+        _zplCode = ZplKit.buildBatch(
+          [root, root], // Batch of 2 copies of the root
+          labelSize: ZplLabelSize(width, height),
+        );
+      } else {
+        _zplCode = ZplKit.build(
+          root,
+          labelSize: ZplLabelSize(width, height),
+          printQuantity: 1, // Demo PQ command
+        );
+      }
     });
   }
 
@@ -390,12 +415,12 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 segments: const [
                   ButtonSegment(
                     value: PrinterType.tcp,
-                    label: Text('TCP (9100)'),
+                    label: Text('TCP (9100)', style: TextStyle(fontSize: 12)),
                     icon: Icon(Icons.settings_ethernet, size: 16),
                   ),
                   ButtonSegment(
                     value: PrinterType.http,
-                    label: Text('HTTP (REST)'),
+                    label: Text('HTTP (REST)', style: TextStyle(fontSize: 12)),
                     icon: Icon(Icons.http, size: 16),
                   ),
                 ],
@@ -405,6 +430,20 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                 },
                 style: const ButtonStyle(visualDensity: VisualDensity.compact),
               ),
+              const SizedBox(width: 8),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Checkbox(
+                value: _isBatchDemo,
+                onChanged: (val) {
+                  setState(() => _isBatchDemo = val ?? false);
+                  _generateZpl();
+                },
+              ),
+              const Text('Batch', style: TextStyle(fontSize: 11)),
             ],
           ),
           const SizedBox(height: 12),

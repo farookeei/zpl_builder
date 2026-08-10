@@ -15,6 +15,9 @@ class ZplRow extends ZplComponent {
   /// How the children should be placed along the cross (vertical) axis.
   final ZplCrossAxisAlignment crossAxisAlignment;
 
+  /// How the children should be placed along the main (horizontal) axis.
+  final ZplMainAxisAlignment mainAxisAlignment;
+
   /// The space to place between each child.
   final double spacing;
 
@@ -22,6 +25,7 @@ class ZplRow extends ZplComponent {
   ZplRow({
     required this.children,
     this.crossAxisAlignment = ZplCrossAxisAlignment.start,
+    this.mainAxisAlignment = ZplMainAxisAlignment.start,
     this.spacing = 0.0,
   });
 
@@ -94,7 +98,44 @@ class ZplRow extends ZplComponent {
   @override
   void finalizeLayout(ZplOffset absoluteOffset) {
     setOffset(absoluteOffset);
+
+    // Calculate total width taken by children and explicit spacing
+    double totalChildrenWidth = 0;
+    for (var child in children) {
+      totalChildrenWidth += child.size.width;
+    }
+    double explicitSpacing =
+        spacing * (children.isNotEmpty ? children.length - 1 : 0);
+    double remainingSpace =
+        max(0.0, size.width - totalChildrenWidth - explicitSpacing);
+
     double currentDx = absoluteOffset.dx;
+    double currentSpacing = spacing;
+
+    if (children.isNotEmpty) {
+      switch (mainAxisAlignment) {
+        case ZplMainAxisAlignment.start:
+          break;
+        case ZplMainAxisAlignment.center:
+          currentDx += remainingSpace / 2;
+          break;
+        case ZplMainAxisAlignment.end:
+          currentDx += remainingSpace;
+          break;
+        case ZplMainAxisAlignment.spaceBetween:
+          if (children.length > 1) {
+            currentSpacing = spacing + (remainingSpace / (children.length - 1));
+          }
+          break;
+        case ZplMainAxisAlignment.spaceAround:
+          if (children.isNotEmpty) {
+            double spaceBeforeAndAfter = remainingSpace / children.length / 2;
+            currentDx += spaceBeforeAndAfter;
+            currentSpacing = spacing + (remainingSpace / children.length);
+          }
+          break;
+      }
+    }
 
     for (var child in children) {
       double childDy = absoluteOffset.dy;
@@ -112,7 +153,7 @@ class ZplRow extends ZplComponent {
       }
 
       child.finalizeLayout(ZplOffset(currentDx, childDy));
-      currentDx += child.size.width + spacing;
+      currentDx += child.size.width + currentSpacing;
     }
   }
 

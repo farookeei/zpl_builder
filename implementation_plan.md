@@ -35,39 +35,41 @@ lib/
 └── zpl_kit.dart                        # Main package export file
 ```
 
-## Phase 1: Core Layout Engine & Primitives
-1. **Geometry & Constraints**: Define `Size`, `Offset`, and `BoxConstraints`.
-2. **Component Interface**: Create `ZplComponent` interface with a flutter-like uncoupled `layout` phase and `paint` (ZPL compilation) phase.
-3. **Primitives**: `ZplFont`, `ZplBarcodeType`, `ZplEdgeInsets`, `ZplCrossAxisAlignment`.
+## Phase 1: Core Layout Engine & Primitives (Completed)
+- [x] 1. **Geometry & Constraints**: Define `Size`, `Offset`, and `BoxConstraints`.
+- [x] 2. **Component Interface**: Create `ZplComponent` interface with a flutter-like uncoupled `layout` phase and `paint` (ZPL compilation) phase.
+- [x] 3. **Primitives**: `ZplFont`, `ZplBarcodeType`, `ZplEdgeInsets`, `ZplCrossAxisAlignment`.
 
-## Phase 2: Compiler & Basic Components
-1. **ZplBuilder**: Takes a root `ZplComponent`, applies an initial constraint, triggers layout, then outputs the raw ZPL string (`^XA...^XZ`).
-2. **Text & Padding**: Build `ZplText` (measuring strings based on font constants) and `ZplPadding`.
-3. **Flex Layout**: Build `ZplColumn` and `ZplRow` using main axis/cross axis traversal similar to `Flex` in Flutter.
+## Phase 2: Compiler & Basic Components (Completed)
+- [x] 1. **ZplBuilder**: Takes a root `ZplComponent`, applies an initial constraint, triggers layout, then outputs the raw ZPL string (`^XA...^XZ`).
+- [x] 2. **Text & Padding**: Build `ZplText` (measuring strings based on font constants) and `ZplPadding`.
+- [x] 3. **Flex Layout**: Build `ZplColumn` and `ZplRow` using main axis/cross axis traversal similar to `Flex` in Flutter.
 
-## Phase 3: Networking & Preview
-1. **TCP Network Printing**: Create `ZebraPrinter.printZPL(...)` util method.
-2. **Labelary API**: Take generated ZPL and request an image preview.
+## Phase 3: Networking & Preview (Completed)
+- [x] 1. **Network Printing**: `TcpZplPrinter` (Socket) and `HttpZplPrinter` (REST) implementations.
+- [x] 2. **Previews**: Offline `ZplPreview` canvas rendering and `ZplLabelaryPreview` (Labelary API cloud rendering).
 
-## Phase 4: Rich Content & Advanced UI
-1. **2D Barcode Support**: Implement `QR Code (^BQ)` and `Data Matrix (^BX)` in `ZplBarcodeType`.
-2. **Graphic Field Support**: Add `ZplImage` for converting bitmaps/logos to `^GF` ZPL commands.
-3. **Inversion & Underlining**: Support `^FR` (Field Reverse) and `^FW` (Field Orientation) for rotated text.
-4. **Enhanced Typography**: Support custom font downloading (`^CW`) and scaling styles.
+## Phase 4: Layout Polish, QR Codes & Batching (v0.0.8 - Completed)
+- [x] 1. **2D Barcode Support**: `QR Code (^BQ)` in `ZplBarcodeType`.
+- [x] 2. **Flexbox Consolidation**: Enable full `MainAxisAlignment` (Center, SpaceBetween, SpaceAround) in `ZplRow` and `ZplColumn`.
+- [x] 3. **Batch Printing**: Grouping multiple labels into a single print job (`ZplKit.buildBatch` and `^PQ` print quantity).
 
-## Phase 5: Developer Experience (DX) & Professional Features
-1. **Physical Units**: Allow dimensions in `mm`, `cm`, and `inch` with auto-conversion to dots based on DPI (203/300/600).
-2. **ZPL Variables & Template Support**: Implement placeholders for dynamic data binding and `^DF`/`^XF` template workflows.
-3. **Batch Printing**: Logic for grouping multiple labels into a single print job.
-4. **Serialization**: Support for JSON serialization of label layouts.
+## Phase 5: Rich Content & Advanced UI
+- [ ] 1. **2D Barcode Expansion**: Support `Data Matrix (^BX)` in `ZplBarcodeType`.
+- [ ] 2. **Graphic Field Support**: Add `ZplImage` for converting bitmaps/logos to `^GF` ZPL commands.
+- [ ] 3. **Inversion & Underlining**: Support `^FR` (Field Reverse) and `^FW` (Field Orientation) for rotated text.
+- [ ] 4. **Enhanced Typography**: Support custom font downloading (`^CW`) and scaling styles.
 
-## Phase 6: Declarative Layout Enhancements (v0.1.0+)
-1. **Vertical Dividers**: Implement `ZplVerticalDivider` that automatically spans parent height using constraints.
-2. **Flexbox Consolidation**: Enable full `MainAxisAlignment` (Center, SpaceBetween, SpaceAround) in `ZplRow` and `ZplColumn` to eliminate manual offsets.
-3. **Intrinsic Sizing**: Support `IntrinsicWidth` and `IntrinsicHeight` for components that need to size themselves based on children before layout.
+## Phase 6: Developer Experience (DX) & Professional Features
+- [ ] 1. **Physical Units**: Allow dimensions in `mm`, `cm`, and `inch` with auto-conversion to dots based on DPI (203/300/600).
+- [ ] 2. **ZPL Variables & Template Support**: Implement placeholders for dynamic data binding and `^DF`/`^XF` template workflows.
+- [ ] 3. **Serialization**: Support for JSON serialization of label layouts.
 
-## Additional Plans: 
-1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components.**
-2. **Implement Platform-specific Printing (BLE/USB) for Flutter Mobile apps.**
-3. **Native Direct-to-Device Printing support for Android/iOS (Zebra SDK Bridge).**
+## Phase 7: Declarative Layout Enhancements
+- [ ] 1. **Vertical Dividers**: Implement `ZplVerticalDivider` that automatically spans parent height using constraints.
+- [ ] 2. **Intrinsic Sizing**: Support `IntrinsicWidth` and `IntrinsicHeight` for components that need to size themselves based on children before layout.
 
+## Additional Plans
+- [ ] 1. **Separate all the zebra commands in a single page and map them to the corresponding ZPL components.**
+- [ ] 2. **Implement Platform-specific Printing (BLE/USB) for Flutter Mobile apps.**
+- [ ] 3. **Native Direct-to-Device Printing support for Android/iOS (Zebra SDK Bridge).**

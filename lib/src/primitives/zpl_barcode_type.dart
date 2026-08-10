@@ -13,7 +13,10 @@ enum ZplBarcodeType {
   ean8('B8'),
 
   /// EAN-13 barcode.
-  ean13('BE');
+  ean13('BE'),
+
+  /// QR Code.
+  qrCode('BQ');
 
   /// The raw ZPL command for this barcode type.
   final String command;
