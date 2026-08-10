@@ -127,8 +127,7 @@ class ZplBarcode extends ZplComponent {
     try {
       final double textFontSize = (widthRatio * 6).clamp(12, 40);
 
-      final double actualHeight =
-          type == ZplBarcodeType.qrCode ? size.width : height;
+      final double actualHeight = size.height;
 
       final elements = barcode.make(
         data,

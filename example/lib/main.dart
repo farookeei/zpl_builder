@@ -173,8 +173,8 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
 
           // Section 3: Large Barcode & QR Code
           ZplRow(
-            // mainAxisAlignment: ZplMainAxisAlignment.spaceAround,
-            crossAxisAlignment: ZplCrossAxisAlignment.end,
+            mainAxisAlignment: ZplMainAxisAlignment.spaceAround,
+            crossAxisAlignment: ZplCrossAxisAlignment.center,
             children: [
               ZplPadding(
                 padding: ZplEdgeInsets.only(top: 20),
@@ -185,13 +185,13 @@ class _ZplExamplePageState extends State<ZplExamplePage> {
                   printText: true,
                 ),
               ),
-              ZplText("scsd"),
+              ZplText("dcs"),
               ZplPadding(
                 padding: ZplEdgeInsets.only(top: 20),
                 child: ZplBarcode(
                   'https://flutter.dev',
                   type: ZplBarcodeType.qrCode,
-                  widthRatio: 5,
+                  widthRatio: 4,
                 ),
               ),
             ],
