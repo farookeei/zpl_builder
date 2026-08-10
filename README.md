@@ -16,7 +16,9 @@ A powerful, declarative layout engine for generating Zebra Programming Language 
 Traditional ZPL generation involves constant string concatenation and error-prone absolute `^FO` (Field Origin) math. `zpl_kit` solves this by introducing a **three-pass layout engine** that automatically calculates positions based on parent constraints.
 
 - **Declarative UI**: Build labels just like you build Flutter widgets.
-- **Flexbox Power**: Use `Expanded`, `Spacer`, and flex-ratios to divide label space.
+- **Flexbox Power**: Use `Expanded`, `Spacer`, and flex alignments (`mainAxisAlignment` & `crossAxisAlignment`).
+- **2D & 1D Barcodes**: Support for Code 128, Code 39, UPC, EAN, and 2D **QR Codes** (`^BQ`).
+- **Batch Printing & Copies**: Group multiple labels or set print quantities (`^PQ`) effortlessly.
 - **Precision Centering**: Automatically center barcodes and text with `ZplCenter`.
 - **Smart Text**: Support for multi-line wrapping and text alignment using native ZPL `^FB` blocks.
 
@@ -88,7 +90,7 @@ Add `zpl_kit` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  zpl_kit: ^0.0.7
+  zpl_kit: ^0.0.8
 ```
 
 ---
@@ -144,6 +146,39 @@ void main() {
 
 ---
 
+## Batch Printing & Copies
+
+`zpl_kit` provides native support for printing multiple labels in a single job.
+
+### 1. Batch Printing Multiple Labels
+Use `ZplKit.buildBatch()` to generate a single concatenated ZPL string for an array of label components:
+
+```dart
+List<ZplComponent> orderLabels = orders.map((order) => buildOrderLabel(order)).toList();
+
+// Combines all labels into a single stream for one network request
+String batchZpl = ZplKit.buildBatch(
+  orderLabels,
+  labelSize: ZplLabelSize.shipping4x6,
+);
+
+await TcpZplPrinter.printOnce(host: '192.168.1.100', zpl: batchZpl);
+```
+
+### 2. Printing Copies (`^PQ`)
+Pass `printQuantity` to `ZplKit.build()` to instruct the printer to print multiple copies of a single label format efficiently:
+
+```dart
+String zplWithCopies = ZplKit.build(
+  label,
+  labelSize: ZplLabelSize.shipping4x6,
+  printQuantity: 5, // Prints 5 physical copies!
+);
+```
+```
+
+---
+
 ## Printing Support
 
 `zpl_kit` makes it easy to send your generated ZPL strings to physical printers. It provides an extensible OOP architecture to support different connection types.
@@ -194,8 +229,8 @@ class BluetoothZplPrinter extends ZplPrinterConnector {
 
 | Component | Description |
 | :--- | :--- |
-| **`ZplColumn`** | Arranges children vertically. Supports `crossAxisAlignment`. |
-| **`ZplRow`** | Arranges children horizontally. Supports `crossAxisAlignment`. |
+| **`ZplColumn`** | Arranges children vertically. Supports `mainAxisAlignment` and `crossAxisAlignment`. |
+| **`ZplRow`** | Arranges children horizontally. Supports `mainAxisAlignment` and `crossAxisAlignment`. |
 | **`ZplExpanded`** | Tells a child to fill the remaining available space in a Row/Column. |
 | **`ZplSpacer`** | An empty flexible space used to push components apart. |
 | **`ZplCenter`** | Automatically calculates offsets to center its child within the parent. |
@@ -209,7 +244,7 @@ class BluetoothZplPrinter extends ZplPrinterConnector {
 | Widget | Description |
 | :--- | :--- |
 | **`ZplText`** | Standard text. Supports custom fonts, alignment (`textAlign`), and wrapping (`maxLines`). |
-| **`ZplBarcode`** | Generates barcodes (Code 128, QR, etc.) with configurable height and ratio. |
+| **`ZplBarcode`** | Generates 1D (Code 128, Code 39, UPC, EAN) and 2D barcodes (**QR Code**) with configurable height and ratio. |
 | **`ZplDivider`** | A convenience widget for drawing horizontal separator lines. |
 | **`ZplGraphicBox`** | Draws squares, rectangles, or lines with optional rounding. |
 

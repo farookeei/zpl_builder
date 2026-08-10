@@ -1,3 +1,10 @@
+## 0.0.8 - 2026-08-10
+
+* **2D Barcode Support**: Added `ZplBarcodeType.qrCode` (`^BQ`) with automatic square module sizing, ZPL command formatting, and native preview support.
+* **Flexbox Alignment**: Implemented `mainAxisAlignment` (`start`, `center`, `end`, `spaceBetween`, `spaceAround`) in `ZplRow` and `ZplColumn` for effortless declarative positioning.
+* **Batch Printing & Print Quantity**: Introduced `ZplKit.buildBatch` for combining multiple labels into a single print stream, and added `printQuantity` parameter to `ZplKit.build()` for `^PQ` command support.
+* **Native Preview Accuracy**: Fixed 1D barcode bar height rendering in `ZplPreview` to match 100% with Labelary cloud previews and physical Zebra printer behavior.
+
 ## 0.0.7 - 2026-04-17
 
 * **Direct Printing**: Formally integrated `TcpZplPrinter` (Socket) and `HttpZplPrinter` (REST) into the core library for direct communication with thermal printers across Mobile and Web.
